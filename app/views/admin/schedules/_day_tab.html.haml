@@ -5,11 +5,9 @@
       .room-name
         - room_date_event_schedules = date_event_schedules.select{ |e| e.room == room }
         = room.name
-      / generate slots from 9hr to 18hr (e.g. whole work day), multiply by 4 since 60/15=4 and 15min slots are default
-      / actually we switched to 5 minutes slots thus the coefficient of 12
-      - (9*6..18*6).each do |slot|
-        - hour = slot / 6
-        - minutes = (10 * (slot % 6) == 0) ? '00' : (10 * (slot % 6)).to_s.rjust(2, '0')
+      - ((@conference.start_hour * 4)..((@conference.end_hour * 4) - 1)).each do |slot|
+        - hour = slot / 4
+        - minutes = (15 * (slot % 4) == 0) ? '00' : 15 * (slot % 4)
         - time = "#{hour}:#{minutes}"
         .schedule-room-slot{ id: "schedule-room-#{room.guid}-#{hour}-#{minutes}", |
                              room_id: room.id, |
