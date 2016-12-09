@@ -20,6 +20,9 @@ gem 'responders', '~> 2.0'
 # as the database for Active Record
 gem 'mysql2'
 
+# comment the mysql gem above if using Postgres
+gem 'pg'
+
 # for observing records
 gem 'rails-observers'
 
