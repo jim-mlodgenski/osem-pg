@@ -127,7 +127,7 @@ class Conference < ActiveRecord::Base
     result = []
 
     if program && program.cfp && program.events
-      submissions = program.events.group(:week).count
+      submissions = program.events.select(:week).group(:week).order(:week).count
       start_week = program.cfp.start_week
       weeks = program.cfp.weeks
       result = calculate_items_per_week(start_week, weeks, submissions)
@@ -175,7 +175,7 @@ class Conference < ActiveRecord::Base
         registration_period.start_date &&
         registration_period.end_date
 
-      reg = registrations.group(:week).count
+      reg = registrations.group(:week).order(:week).count
       start_week = get_registration_start_week
       weeks = registration_weeks
       result = calculate_items_per_week(start_week, weeks, reg)
