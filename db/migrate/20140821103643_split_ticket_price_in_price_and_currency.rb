@@ -5,7 +5,7 @@ class SplitTicketPriceInPriceAndCurrency < ActiveRecord::Migration
 
   def change
     # use add_monetize for PostgreSQL instead of add_money
-    if ActiveRecord::Base.connection.adapter_name  == "PostgreSQL"
+    if ActiveRecord::Base.connection.adapter_name  == 'PostgreSQL'
       add_monetize :tickets, :price
     else
       add_money :tickets, :price
