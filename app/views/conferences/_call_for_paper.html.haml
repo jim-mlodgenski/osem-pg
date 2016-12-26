@@ -5,7 +5,7 @@
 .container
   .row
     .col-md-12.text-center
-      %h2
+      %h1
         Call for Papers
       %p.lead
         We are ready to accept your proposals for sessions!
@@ -40,4 +40,4 @@
   .row
     .col-md-12.text-center
       %p.cta-button
-        = link_to "Submit your paper now", conference_program_proposals_path(@conference.short_title), class: 'btn btn-success btn-lg text-center'
+        = link_to "Submit your paper now", conference_program_proposals_path(@conference.short_title), class: 'btn btn-warning btn-lg text-center'

@@ -7,7 +7,7 @@ body {
   /* Margin bottom by 2 times the footer height */
   margin-bottom: 60px;
   /* Margin bottom by navbar height */
-  padding-top: 60px;
+  // padding-top: 60px;
 }
 
 #content {
@@ -24,8 +24,75 @@ body {
   }
 }
 
+.container {
+  width: 90%;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+.navbar-custom {
+    // background-color: rgba(0,0,0,0.3);
+    border: 0 none;
+    margin: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    transition: all 0.2s linear 0s;
+}
+.navbar-custom .navbar-nav li {
+    margin: 0;
+}
+.navbar-custom .navbar-nav > li > a {
+    border-bottom: 3px solid transparent;
+    text-shadow: 1px 1px 3px #000;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+.navbar-custom .navbar-nav > li > a:focus, .navbar-custom .navbar-nav > li > a:hover {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.7);
+}
+.navbar-custom .navbar-nav > .active > a {
+    border-color: rgb(255, 255, 255);
+}
+
 .nav-tabs {
   margin-bottom: 15px;
+}
+
+.navbar-brand {
+    color: white;
+    font-size: 30px;
+}
+
+.navbar-brand img {
+   max-height:50px;
+   margin-top: -14px;
+}
+
+.navbar-solid {
+    // background-color: rgba(0,0,0,0.5) !important;
+    background-color: white;
+    padding: 0 !important;
+    transition: all 0.2s linear 0s;
+}
+
+.navbar-solid .navbar-nav > li > a {
+    border-bottom: 3px solid transparent;
+    text-shadow: none;
+    color: black;
+}
+
+.navbar-solid .navbar-nav > li > a:focus, .navbar-solid .navbar-nav > li > a:hover {
+    background-color: whitesmoke;
+    border-bottom: 3px solid transparent;
+}
+
+.navbar-solid .navbar-brand img {
+    filter: brightness(33%);
 }
 
 .img-center {

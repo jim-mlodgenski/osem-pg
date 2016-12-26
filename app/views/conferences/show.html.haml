@@ -1,7 +1,6 @@
 = content_for :title do
   = @conference.title
-
-#splash
+= content_for :splash_base do
   - if @conference.splashpage
     #banner
       .container
@@ -27,6 +26,9 @@
             .col-md-8.col-md-offset-2
               %h3.text-center
                 = markdown(@conference.description)
+    - if @conference.sponsors.any? and @conference.splashpage.include_sponsors
+      %section#sponsors
+        = render 'sponsors'
 
     - if @conference.registration_open? and @conference.splashpage.include_registrations
       %section#registration
@@ -52,30 +54,46 @@
       %section#tickets
         = render 'tickets'
 
-    - if @conference.sponsors.any? and @conference.splashpage.include_sponsors
-      %section#sponsors
-        = render 'sponsors'
-
     - if @conference.contact.has_social_media? and @conference.splashpage.include_social_media
       %section#social-media
         = render 'social_media'
 
-    // grmbl
-    = render 'footer'
+#splash
+  = yield :splash_base
+  // grmbl
+  = render 'footer'
 
 - content_for :script_head do
   :javascript
-    var triangle_tcs = tinycolor("#{@conference.color}").monochromatic();
+    $(window).scroll(function () {
+        handleTopNavAnimation();
+      });
+
+      $(window).load(function () {
+          handleTopNavAnimation();
+      });
+
+    function handleTopNavAnimation() {
+        var top = $(window).scrollTop();
+
+        if (top > 50) {
+            $('#site-nav').addClass('navbar-solid');
+        }
+        else {
+            $('#site-nav').removeClass('navbar-solid');
+        }
+    }
+    var triangle_tcs = tinycolor("#ffffff").monochromatic();
     var triangle_colors = triangle_tcs.map(function(t) { return t.toHexString(); });
     $(function () {
       $(document).ready(function() {
         var triangle_width = document.body.clientWidth;
-        var triangle_height = ($( "#banner" ).height() + 200 );
+        var triangle_height = ($( "#callforpapers" ).height() + 200 );
         var pattern = Trianglify({ width: triangle_width,
                                    height: triangle_height,
                                    cell_size: 100,
                                    x_colors: triangle_colors
                                   });
-        $('#banner').css('background-image', 'url("' + pattern.png() + '")');
+        $('#callforpapers').css('background-image', 'url("' + pattern.png() + '")');
       });
     });
