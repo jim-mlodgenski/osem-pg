@@ -34,12 +34,12 @@
                         %li= link_to "See all unread Comments (#{unread_notifications(current_user).length})", admin_comments_path
                       %li= link_to 'See all Comments', admin_comments_path(anchor: 'all_comments')
             %li.dropdown
-              %a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#", id: "current-user-detail"}
+              %a.dropdown-toggle.userpic{"data-toggle" => "dropdown", :href => "#", id: "current-user-detail"}
                 - if not current_user.name.blank?
                   #{current_user.name}
                 -else
                   #{current_user.email}
-                = image_tag(current_user.gravatar_url(size: '18'), title: "Yo #{current_user.name}!", :alt => '')
+                = image_tag(current_user.gravatar_url(size: '32'), title: "Yo #{current_user.name}!", :alt => '')
                 %b.caret
               %ul.dropdown-menu
                 = render 'layouts/user_menu'
