@@ -18,10 +18,13 @@ gem 'rails_12factor', group: :production
 gem 'responders', '~> 2.0'
 
 # as the database for Active Record
-gem 'mysql2'
+# gem 'mysql2'
 
 # comment the mysql gem above if using Postgres
-#gem 'pg'
+gem 'pg'
+
+#support for django password encryption
+gem 'pbkdf2_password_hasher'
 
 # for observing records
 gem 'rails-observers'

@@ -194,6 +194,17 @@ class User < ActiveRecord::Base
     proposals(conference).count
   end
 
+
+  # Django passwords encryption support
+  def valid_password?(pwd)
+    begin
+      super(pwd) # try the standard way
+    rescue
+      p 'trying django way'
+      Pbkdf2PasswordHasher.check_password(pwd,self.encrypted_password) # if failed, then try the django's way
+    end
+  end
+
   private
 
   def setup_role
@@ -210,4 +221,5 @@ class User < ActiveRecord::Base
       errors.add(:biography, 'is limited to 150 words.') if self.biography.split.length > 150
     end
   end
+
 end
