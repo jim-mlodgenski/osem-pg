@@ -7,6 +7,7 @@
         %span.notranslate
           = @conference.short_title
         has the most awesome program ever!
+        %br
         - if @conference.splashpage and @conference.program.tracks.any? and @conference.splashpage.include_tracks
           See rock-star speakers cover the topics of
       - if @conference.splashpage and @conference.splashpage.include_tracks
@@ -14,9 +15,11 @@
           .row.row-centered
             - slice.each do |track|
               .col-md-4.col-sm-4.col-centered.col-top.track
-                %h4.text-center
+                %h4.text-center{'style'=>"border-bottom: 4px solid #{track.color}"}
                   = track.name
                 = markdown(track.description)
+                - track.events.each do |event|
+                  = "#{event.title} by #{event.submitter.name}"
 
   - if @conference.program and @conference.program.schedule_public
     .row
@@ -26,8 +29,6 @@
             Full Schedule
 
 
-  %h3.text-center
-    Don't miss out!
   %br
   - if @conference.program.events.highlights.any?
     .row

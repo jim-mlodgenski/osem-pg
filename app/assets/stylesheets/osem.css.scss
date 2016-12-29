@@ -53,6 +53,7 @@ body {
     text-transform: uppercase;
 }
 .navbar-custom .navbar-nav > li > a:focus, .navbar-custom .navbar-nav > li > a:hover {
+    outline: 0;
     background-color: transparent;
     border-color: rgba(255, 255, 255, 0.7);
 }
@@ -78,17 +79,20 @@ body {
     background-color: white;
     padding: 0 !important;
     transition: all 0.2s linear 0s;
+    -webkit-box-shadow: 0 3px 6px -6px black;
+    -moz-box-shadow: 0 3px 6px -6px black;
+    box-shadow: 0 3px 6px -6px black;
 }
 
 .navbar-solid .navbar-nav > li > a {
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid transparent;
     text-shadow: none;
     color: black;
 }
 
 .navbar-solid .navbar-nav > li > a:focus, .navbar-solid .navbar-nav > li > a:hover {
     background-color: whitesmoke;
-    border-bottom: 3px solid transparent;
+    border-bottom: 2px solid #ccc;
 }
 
 .navbar-solid .navbar-brand img {
@@ -101,7 +105,7 @@ body {
 
 .userpic {
   padding-top: 10px !important;
-  padding-bottom: 10px !important;
+  padding-bottom: 8px !important;
   img {
     border-radius: 50%;
   }

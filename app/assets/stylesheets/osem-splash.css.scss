@@ -32,9 +32,7 @@
   #banner{
     background-image: image-url('skyline.jpg');
     background-repeat: no-repeat;
-    // background-position: center center;
     background-size: cover;
-    // margin-top: -10px;
     padding-top: 180px;
     padding-bottom: 100px;
     color: white;
@@ -67,10 +65,11 @@
     }
     .track {
       padding: 20px;
+      // filter: brightness(10%);
     }
-    .track:hover{
-      background-color: #F0FFFF;
-    }
+    // .track:hover{
+    //   background-color: #F0FFFF;
+    // }
   }
 
 
