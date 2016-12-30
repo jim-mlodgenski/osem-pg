@@ -218,7 +218,7 @@ class User < ActiveRecord::Base
   #
   def biography_limit
     if self.biography.present?
-      errors.add(:biography, 'is limited to 150 words.') if self.biography.split.length > 150
+      errors.add(:biography, 'is limited to 150 words.') if self.biography.split.length > 350
     end
   end
 
