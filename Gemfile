@@ -23,6 +23,12 @@ gem 'responders', '~> 2.0'
 # comment the mysql gem above if using Postgres
 gem 'pg'
 
+#support for django password encryption
+gem 'pbkdf2_password_hasher'
+
+#legacy db migration
+gem 'trucker', :git => 'https://github.com/gilesbowkett/trucker.git', :branch => 'rails31'
+
 # for observing records
 gem 'rails-observers'
 
