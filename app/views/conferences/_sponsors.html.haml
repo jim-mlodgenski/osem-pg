@@ -11,9 +11,11 @@
       - sponsorship_level.sponsors.each_slice(3) do |slice|
         .row.row-centered
           -if sponsorship_level.position == 1
-            %h4.text-center #{sponsorship_level.title} Sponsor
+            %h3.text-center
+              %strong #{sponsorship_level.title} Sponsor
           -else
-            %h5.text-center #{sponsorship_level.title}
+            %h4.text-center
+              %strong #{sponsorship_level.title}
           - slice.each do |sponsor|
             .col-md-4.col-sm-4.col-centered.col-top
               %a{ href: '#', data: { toggle: 'modal', target: "#modal_#{sponsor.id}" } }

@@ -17,9 +17,10 @@
               .col-md-4.col-sm-4.col-centered.col-top.track
                 %h4.text-center{'style'=>"border-bottom: 4px solid #{track.color}"}
                   = track.name
-                = markdown(track.description)
+                / = markdown(track.description)
                 - track.events.each do |event|
-                  = "#{event.title} by #{event.submitter.name}"
+                  %p
+                    = "#{event.title} by #{event.submitter.name}"
 
   - if @conference.program and @conference.program.schedule_public
     .row

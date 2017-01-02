@@ -32,7 +32,8 @@
 
     - if @conference.registration_open? and @conference.splashpage.include_registrations
       %section#registration
-        = render 'registration'
+        / = render 'registration'
+        = render 'registration_eventbrite'
 
     - if @conference.splashpage.include_program
       %section#program
