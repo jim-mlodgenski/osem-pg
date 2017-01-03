@@ -16,6 +16,7 @@ class EventType < ActiveRecord::Base
   alias_attribute :name, :title
 
   # If LENGTH_STEP must be divisor of 60, otherwise the schedule wont be displayed properly
+  # changed from 15
   LENGTH_STEP = 5
 
   private
