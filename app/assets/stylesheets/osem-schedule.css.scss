@@ -18,7 +18,7 @@
 .schedule-room-slot{
   padding: 2px 5px;
   border: 1px solid #848484;
-  height: 58px;
+  height: 24px;
   line-height: 20px;
   font-size: 13px;
 }
@@ -46,6 +46,12 @@
     border: 1px solid grey;
     margin-right: 5px;
 }
+
+.room-col {
+    width: 10%;
+    padding: 10px;
+    float: left
+};
 
 #schedule td.event {
 background-image: linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
@@ -166,8 +172,8 @@ td.room{
 }
 
 th.date{
-  font-size: 12px;
-  padding: 8px 0px 8px 1% !important;
+  font-size: 13px !important;
+  padding: 2px 0px 2px 1px !important;
 }
 
 .speaker-pic{
