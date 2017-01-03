@@ -147,5 +147,7 @@ Osem::Application.routes.draw do
 
   get '/admin' => redirect('/admin/conferences')
 
-  root to: 'conferences#index', via: [:get, :options]
+  get '/conferences' => 'conferences#index'
+  # root to: 'conferences#index', via: [:get, :options]
+  root to: 'conferences#redirect_to_current'
 end
