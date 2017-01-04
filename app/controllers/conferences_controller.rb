@@ -20,9 +20,14 @@ class ConferencesController < ApplicationController
 
   def show
     @coc = nil
+    @venue_extra = nil
     coc_path = Rails.root.join('conference_policies.md')
     if File.exist?(coc_path)
       @coc = File.read(coc_path)
+    end
+    venue_extra_path = Rails.root.join('venue_extra.md')
+    if File.exist?(venue_extra_path)
+      @venue_extra = File.read(venue_extra_path)
     end
   end
 
