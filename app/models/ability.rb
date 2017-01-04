@@ -30,6 +30,7 @@ class Ability
   # Abilities for not signed in users (guests)
   def not_signed_in
     can [:index], Conference
+    can [:redirect_to_current], Conference
     can [:show], Conference do |conference|
       conference.splashpage && conference.splashpage.public == true
     end

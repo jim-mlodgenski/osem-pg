@@ -288,7 +288,7 @@ class Event < ActiveRecord::Base
   def before_end_of_conference
     errors.
         add(:created_at, "can't be after the conference end date!") if program.conference && program.conference.end_date &&
-        (self.created_at > program.conference.end_date)
+        (Date.today > program.conference.end_date)
   end
 
   def conference_id

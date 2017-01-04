@@ -18,7 +18,13 @@ class ConferencesController < ApplicationController
     end
   end
 
-  def show; end
+  def show
+    @coc = nil
+    coc_path = Rails.root.join('conference_policies.md')
+    if File.exist?(coc_path)
+      @coc = File.read(coc_path)
+    end
+  end
 
   private
 

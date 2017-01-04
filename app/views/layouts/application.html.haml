@@ -26,9 +26,10 @@
     - if controller.class.name.split("::").first=="Admin"
       = render 'layouts/admin'
     -else
-      #messages
-        .container
-          = render 'layouts/messages'
+      - unless content_for? :splash_nav
+        #messages
+          .container
+            = render 'layouts/messages'
       #content
         = yield
     #footer
@@ -43,4 +44,4 @@
             The source code and the developers are on
             =link_to "github.", "https://github.com/openSUSE/osem"
     = content_for(:script_body)
-    = piwik_tracking_tag
+    / = piwik_tracking_tag
