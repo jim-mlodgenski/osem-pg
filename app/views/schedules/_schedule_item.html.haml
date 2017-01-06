@@ -1,4 +1,6 @@
+- color = event.track.try(:color).present? ? event.track.try(:color) : '#dddddd'
 %td.event{ width: "#{ width * span }%" , |
+           style: "border-style: solid; box-shadow: inset 0px -5px 0px 0px #{color}", 
            colspan: span, |
            role: "button" }
   %a.unstyled-link{href: url_for(conference_program_proposal_path(@conference.short_title, event.id))}
