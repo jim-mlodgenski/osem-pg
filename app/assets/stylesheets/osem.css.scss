@@ -19,10 +19,15 @@ body {
   bottom: 0;
   width: 100%;
   color: grey;
-  background-color: #2F2F2F;
+
   .container {
     padding: 5px;
   }
+}
+
+// different color for the splashpage footer
+.splash-footer {
+  background-color: #2F2F2F;
 }
 
 .container {
@@ -82,6 +87,10 @@ body {
     -webkit-box-shadow: 0 3px 6px -6px black;
     -moz-box-shadow: 0 3px 6px -6px black;
     box-shadow: 0 3px 6px -6px black;
+}
+
+.navbar-solid a.navbar-brand {
+  color: grey !important;
 }
 
 .navbar-solid .navbar-nav > li > a {

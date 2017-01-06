@@ -32,7 +32,7 @@
             = render 'layouts/messages'
       #content
         = yield
-    #footer
+    #footer{class: ('splash-footer' if content_for? :splash_nav)}
       .container
         %p.muted.text-center
           %small
