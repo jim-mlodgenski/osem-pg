@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160815140302) do
+ActiveRecord::Schema.define(version: 20170109134654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -194,13 +194,14 @@ ActiveRecord::Schema.define(version: 20160815140302) do
   add_index "event_schedules", ["schedule_id"], name: "index_event_schedules_on_schedule_id", using: :btree
 
   create_table "event_types", force: :cascade do |t|
-    t.string  "title",                                 null: false
+    t.string  "title",                                   null: false
     t.integer "length",                  default: 30
     t.integer "minimum_abstract_length", default: 0
     t.integer "maximum_abstract_length", default: 500
     t.string  "color"
     t.string  "description"
     t.integer "program_id"
+    t.boolean "internal_event",          default: false
   end
 
   create_table "event_users", force: :cascade do |t|
@@ -233,6 +234,32 @@ ActiveRecord::Schema.define(version: 20160815140302) do
     t.integer  "difficulty_level_id"
     t.integer  "week"
     t.boolean  "is_highlight",                 default: false
+    t.integer  "program_id"
+    t.integer  "max_attendees"
+  end
+
+  create_table "events_back", id: false, force: :cascade do |t|
+    t.integer  "id"
+    t.string   "guid"
+    t.integer  "event_type_id"
+    t.string   "title"
+    t.string   "subtitle"
+    t.string   "state"
+    t.string   "progress"
+    t.string   "language"
+    t.datetime "start_time"
+    t.text     "abstract"
+    t.text     "description"
+    t.boolean  "public"
+    t.text     "proposal_additional_speakers"
+    t.integer  "track_id"
+    t.integer  "room_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "require_registration"
+    t.integer  "difficulty_level_id"
+    t.integer  "week"
+    t.boolean  "is_highlight"
     t.integer  "program_id"
     t.integer  "max_attendees"
   end
