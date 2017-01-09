@@ -15,5 +15,8 @@
       = f.input :minimum_abstract_length, :input_html => {:size => 3}
       = f.input :maximum_abstract_length, :input_html => {:size => 3}
       = f.input :color, :input_html => { :size => 6, :type => 'color' }
+      = f.input :'internal_event', :input_html => { :type => 'checkbox', }
+      %p
+        Tick the internal event checkbox to hide the event from splashpage (useful for coffeebreaks etc)
       %p.text-right
         = f.action :submit, as: :button, button_html: { class: 'btn btn-primary' }

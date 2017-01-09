@@ -23,9 +23,9 @@
                 %h4.text-center{'style'=>"border-bottom: 4px solid #{track.color}"}
                   = track.name
                 / = markdown(track.description)
-                - track.events.each do |event|
+                - track.events.joins(:event_type).each do |event|
                   %p
-                    = "#{event.title} by #{event.submitter.name}"
+                    = "#{event.title} by #{event.submitter.name}" unless event.event_type.internal_event?
 
   - if @conference.program and @conference.program.schedule_public
     .row
