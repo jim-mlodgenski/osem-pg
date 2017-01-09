@@ -1,11 +1,12 @@
-module Admin
+  module Admin
   class EventsController < Admin::BaseController
     load_and_authorize_resource :conference, find_by: :short_title
     load_and_authorize_resource :program, through: :conference, singleton: true
     load_and_authorize_resource :event, through: :program
     load_and_authorize_resource :events_registration, only: :toggle_attendance
+    # load_and_authorize_resource :user, only: :new
 
-    before_action :get_event, except: [:index, :create]
+    before_action :get_event, except: [:index, :create, :new]
 
     # FIXME: The timezome should only be applied on output, otherwise
     # you get lost in timezone conversions...
@@ -24,7 +25,7 @@ module Admin
       @event_distribution = @conference.event_distribution
       @scheduled_event_distribution = @conference.scheduled_event_distribution
       @file_name = "events_for_#{@conference.short_title}"
-      @event_export_option = params[:event_export_option]
+      # @event_export_option = params[:event_export_option]
 
       respond_to do |format|
         format.html
@@ -92,7 +93,36 @@ module Admin
       end
     end
 
-    def create; end
+    def create
+      @url = admin_conference_program_events_path(@conference.short_title, @event)
+      @users = User.all.order(:name)
+
+      # @event.should_validate_owners = true
+      # @event.speaker_id = params[:event][:speaker_id].to_i
+      # @event.submitter_id = params[:event][:submitter_id].to_i
+      @event.state = :confirmed
+
+      if @event.valid?
+        @event.event_users.new(user_id: params[:event][:submitter_id].to_i,
+                           event_role: 'submitter')
+        @event.event_users.new(user_id: params[:event][:speaker_id].to_i,
+                           event_role: 'speaker')
+      end
+
+      if @event.save
+        ahoy.track 'Event submission', title: 'New submission'
+        redirect_to admin_conference_program_events_path(@conference.short_title), notice: 'Event was successfully submitted.'
+      else
+        flash[:error] = "Could not submit proposal: #{@event.errors.full_messages.join(', ')}"
+        render action: 'new'
+      end
+    end
+
+    def new
+      @url = admin_conference_program_events_path(@conference.short_title, @event)
+      @languages = @program.languages_list
+      @users = User.all.order(:name)
+    end
 
     def accept
       send_mail = @event.program.conference.email_settings.send_on_accepted

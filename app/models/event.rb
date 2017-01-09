@@ -1,4 +1,8 @@
 class Event < ActiveRecord::Base
+  attr_accessor :submitter_id
+  attr_accessor :speaker_id
+  # attr_accessor :should_validate_owners
+
   include ActiveRecord::Transitions
   has_paper_trail on: [:create, :update], ignore: [:updated_at, :guid, :week], meta: { conference_id: :conference_id }
 
@@ -30,12 +34,14 @@ class Event < ActiveRecord::Base
   validate :abstract_limit
   validate :before_end_of_conference, on: :create
   validates :title, presence: true
-  validates :abstract, presence: true
+  validates :abstract, presence: true, unless: "event_type.internal_event"
   validates :event_type, presence: true
   validates :program, presence: true
   validates :max_attendees, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_nil: true }
 
   validate :max_attendees_no_more_than_room_size
+
+  # validate :submitter_and_speaker_present
 
   scope :confirmed, -> { where(state: 'confirmed') }
   scope :canceled, -> { where(state: 'canceled') }
@@ -257,6 +263,8 @@ class Event < ActiveRecord::Base
   end
 
   def abstract_limit
+    #dont validate abstract for internal events
+    return if event_type.internal_event
     # If we don't have an event type, there is no need to count anything
     return unless event_type && abstract
     len = abstract.split.size
@@ -294,4 +302,11 @@ class Event < ActiveRecord::Base
   def conference_id
     program.conference_id
   end
+
+  # def submitter_and_speaker_present
+  #   if should_validate_owners
+  #     errors.add(:speaker_id, "can't be blank!") unless self.speaker_id
+  #     errors.add(:submitter_id, "can't be blank!") unless self.submitter_id
+  #   end
+  # end
 end
