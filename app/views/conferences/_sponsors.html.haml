@@ -5,7 +5,7 @@
 .container
   .row.no-gutter
     .col-md-12
-      %h2.text-center #{@conference.short_title} would not take place without the generous support from our sponsors
+      %h2.text-center PgConf US is thankful for support from our sponsors
   - @conference.sponsorship_levels.each do |sponsorship_level|
     -if sponsorship_level.sponsors.any?
       - sponsorship_level.sponsors.each_slice(3) do |slice|
