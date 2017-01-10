@@ -6,6 +6,16 @@
   .row.no-gutter
     .col-md-12
       %h2.text-center PgConf US is thankful for support from our sponsors
+  -if @conference.contact and !@conference.contact.sponsor_email.blank?
+    .row
+      .col-md-12
+        %h4
+          %p.text-muted.text-center
+            Want to sponsor?
+            = link_to("mailto: #{@conference.contact.sponsor_email}?subject=#{@conference.short_title}%20Sponsorship") do
+              Please contact us!
+            = link_to(asset_url("/assets/prospectus_#{@conference.short_title}.pdf")) do
+              Why Sponsor?
   - @conference.sponsorship_levels.each do |sponsorship_level|
     -if sponsorship_level.sponsors.any?
       - sponsorship_level.sponsors.each_slice(3) do |slice|
@@ -37,11 +47,4 @@
                       = sponsor.description
                   .modal-footer
                     = link_to nil, "#{sponsor.website_url}", target: '_blank'
-  -if @conference.contact and !@conference.contact.sponsor_email.blank?
-    .row
-      .col-md-12
-        %p.text-muted.text-center
-          %small
-            Want to sponsor #{@conference.short_title}?
-            = link_to("mailto: #{@conference.contact.sponsor_email}?subject=#{@conference.short_title}%20Sponsorship") do
-              Please contact us!
+
