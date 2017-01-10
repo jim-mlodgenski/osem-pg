@@ -16,13 +16,11 @@
 
     .tab-content
       .row.legend
-        .col-md-6
-          Legend:
-          - @conference.program.tracks.each do |track|
-            - color = track.try(:color).present? ? track.try(:color) : '#dddddd'
-            %span.track
-              %span.label{ style: "background-color: #{color}"}
-                = track.name
+        - @conference.program.tracks.each do |track|
+          - color = track.try(:color).present? ? track.try(:color) : '#dddddd'
+          %span.track
+            %span.label{ style: "background-color: #{color}"}
+              = track.name
       - @dates.each do |date|
         %div{ class: "tab-pane #{ 'active' if @day == date }", id: "#{ date }" }
 

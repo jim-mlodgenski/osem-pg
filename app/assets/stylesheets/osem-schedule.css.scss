@@ -65,8 +65,12 @@ div#schedule-content .carousel-control {
 
 #schedule-content .row.legend {
   padding: 0px 0px 20px 5px;
+  margin: 0px;
 }
 
+#schedule-content .row.legend .track {
+  padding: 0px;
+}
 #schedule td.event {
   background: #f0f8ff;
 // background-image: linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);

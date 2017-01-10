@@ -93,6 +93,10 @@ body {
   color: grey !important;
 }
 
+.navbar-solid .navbar-toggle > span {
+  background-color: grey !important;
+}
+
 .navbar-solid .navbar-nav > li > a {
     border-bottom: 2px solid transparent;
     text-shadow: none;

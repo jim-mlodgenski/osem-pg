@@ -51,5 +51,4 @@
 
   = content_for :splash_nav do
     %li
-      =link_to('#program', class: 'smoothscroll') do
-        Program
+      %a.smoothscroll{ href: '#program', data: {toggle: "collapse", target:".navbar-collapse" }} Program
