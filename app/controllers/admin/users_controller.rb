@@ -6,6 +6,22 @@ module Admin
       @user = User.new
     end
 
+    def create
+      # there is no usual user creation process when ICHAIN auth is enabled
+      if ENV['OSEM_ICHAIN_ENABLED'] != 'true'
+        @user = User.new(user_params)
+        @user.skip_confirmation!
+        if @user.save
+          redirect_to admin_users_path, notice: 'User successfully created.'
+        else
+          flash.now[:error] = "Creating User failed: #{@user.errors.full_messages.join('. ')}."
+          render :new
+        end
+      else
+        redirect_to admin_users_path, error: 'Cannot create user with ICHAIN auth enabled.'
+      end
+    end
+
     def index
       @users = User.all
     end
@@ -50,8 +66,9 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:email, :name, :email_public, :biography, :nickname, :affiliation, :is_admin, :username, :login, :is_disabled,
-                                   :tshirt, :mobile, :volunteer_experience, :languages, :to_confirm, role_ids: [])
+      params.require(:user).permit(:email, :name, :email_public, :biography, :nickname, :affiliation, :is_admin,
+                                   :username, :login, :is_disabled, :tshirt, :mobile, :volunteer_experience,
+                                   :languages, :to_confirm, :password, role_ids: [])
     end
   end
 end
