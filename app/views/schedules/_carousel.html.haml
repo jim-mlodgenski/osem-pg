@@ -27,7 +27,8 @@
               %td.room{ style: "height: #{ td_height(@rooms) }px;" }
                 .room.elipsis.break-words{ style: "-webkit-line-clamp: #{ room_lines(@rooms) }; height: #{ room_height(@rooms) }px;" }
                   = room.name
-                - event_schedules = room.event_schedules.select{ |e| (e.schedule_id == @conference.program.selected_schedule.id) && (e.start_time >= start_time) && (e.start_time <= (start_time + number_columns.hour)) }
+                - event_schedules = room.event_schedules.select{ |e| (e.schedule_id == @conference.program.selected_schedule.id) && (e.end_time >= start_time) && (e.start_time <= (start_time + number_columns.hour)) }
+                - p start_time
                 - (1..intervals).each do |i|
                   - if span > 1
                     - span -= 1
@@ -39,7 +40,7 @@
 
                     - if event_schedule
                       / There is an event, calculate the span and show it
-                      - event_span =  (event_schedule.end_time.to_i - start_room_time.to_i) / 60 / EventType::LENGTH_STEP
+                      - event_span = (event_schedule.end_time.to_i - start_room_time.to_i) / 60 / EventType::LENGTH_STEP
                       - span = ((event_span + i - 1 ) > intervals ? intervals  + 1 - i : event_span)
                       = render partial: 'schedule_item', locals: {event: event_schedule.event, event_schedule: event_schedule, span: span, width: width}
                     - else
