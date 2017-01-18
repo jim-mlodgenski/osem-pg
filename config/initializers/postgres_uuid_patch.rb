@@ -14,6 +14,6 @@ module PostgresqlUuidQuotingPatch
   end
 end
 
-if ActiveRecord::Base.connection.adapter_name  == 'PostgreSQL'
+if ActiveRecord::Base.connection.adapter_name == 'PostgreSQL'
   ActiveRecord::ConnectionAdapters::PostgreSQLAdapter.send :include, PostgresqlUuidQuotingPatch
 end
