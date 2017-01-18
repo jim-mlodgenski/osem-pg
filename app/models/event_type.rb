@@ -35,5 +35,4 @@ class EventType < ActiveRecord::Base
   def conference_id
     program.conference_id
   end
-
 end
