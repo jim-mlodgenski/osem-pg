@@ -16,9 +16,11 @@
             - td_start_time = start_time
             - (1..intervals).each do |i|
               %th.date
-                = (td_start_time).strftime("%H:%M")
+                %span
+                  = (td_start_time).strftime("%H:")
+                %span
+                  = (td_start_time).strftime("%M")
               - td_start_time += @step_minutes
-
           - start_room_time = start_time
           - @rooms.each do |room|
             - start_room_time = start_time
