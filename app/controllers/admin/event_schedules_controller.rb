@@ -20,7 +20,7 @@ module Admin
 
     def destroy
       if @event_schedule.destroy
-        render json: {}
+        render json: { event_state: @event_schedule.event.state }
       else
         render json: { errors: "The event couldn't be unscheduled. #{@event_schedule.errors.full_messages.join('. ')}" }, status: 422
       end
