@@ -14,5 +14,7 @@
                  event_schedule_id: event_schedule_id, |
                  class: ('compact' if compact_grid) }
   .schedule-event-text{ style: "-webkit-line-clamp: #{lines}; height: #{lines * 23}px;"}
-    %span.schedule-event-delete-button{ onclick: "Schedule.remove(\'event-#{event.id}\');" } X
+    %span.cursor-pointer.schedule-event-delete-button.glyphicon.glyphicon-remove{ onclick: "Schedule.remove(\'event-#{event.id}\');" }
+    - if event.state != 'confirmed'
+      %span.glyphicon.glyphicon-exclamation-sign.text-danger.cursor-help{ title: 'this event was cancelled or withdrawn!' }
     = event.title

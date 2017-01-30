@@ -82,9 +82,6 @@ var Schedule = {
 };
 
 $(document).ready( function() {
-  // hide the remove button for unscheduled events
-  $('.unscheduled-events .schedule-event-delete-button').hide();
-
   // set events as draggable
   $('.schedule-event').draggable({
     snap: '.schedule-room-slot',

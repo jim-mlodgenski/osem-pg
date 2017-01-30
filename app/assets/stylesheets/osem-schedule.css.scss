@@ -50,12 +50,16 @@
   overflow: hidden;
 }
 
-.schedule-event-delete-button {
-    font-weight:bold;
+.curor-help {
+    cursor: help;
+}
+
+.cursor-pointer {
     cursor: pointer;
-    padding: 0px 3px;
-    border: 1px solid grey;
-    margin-right: 5px;
+}
+
+.unscheduled-events .schedule-event-delete-button {
+  display: none;
 }
 
 .room-col {
