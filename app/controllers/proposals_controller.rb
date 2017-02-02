@@ -26,6 +26,7 @@ class ProposalsController < ApplicationController
 
   def edit
     @url = conference_program_proposal_path(@conference.short_title, params[:id])
+    @users = User.all.order(:name)
     @languages = @program.languages_list
   end
 

@@ -1,7 +1,7 @@
 class Event < ActiveRecord::Base
   attr_accessor :submitter_id
-  attr_accessor :speaker_id
-  # attr_accessor :should_validate_owners
+  attr_accessor :speaker_ids
+  attr_accessor :validate_owners
 
   include ActiveRecord::Transitions
   has_paper_trail on: [:create, :update], ignore: [:updated_at, :guid, :week], meta: { conference_id: :conference_id }
@@ -12,7 +12,8 @@ class Event < ActiveRecord::Base
 
   has_many :event_users, dependent: :destroy
   has_many :users, through: :event_users
-  has_many :speakers, through: :event_users, source: :user
+  has_many :speaker_event_users, -> { where(event_role: 'speaker') }, class_name: 'EventUser'
+  has_many :speakers, through: :speaker_event_users, source: :user
   has_many :votes, dependent: :destroy
   has_many :voters, through: :votes, source: :user
   has_many :commercials, as: :commercialable, dependent: :destroy
@@ -41,7 +42,7 @@ class Event < ActiveRecord::Base
 
   validate :max_attendees_no_more_than_room_size
 
-  # validate :submitter_and_speaker_present
+  validate :submitter_and_speakers_present, if: Proc.new { |event| event.validate_owners == true }
 
   scope :confirmed, -> { where(state: 'confirmed') }
   scope :canceled, -> { where(state: 'canceled') }
@@ -303,10 +304,18 @@ class Event < ActiveRecord::Base
     program.conference_id
   end
 
-  # def submitter_and_speaker_present
-  #   if should_validate_owners
-  #     errors.add(:speaker_id, "can't be blank!") unless self.speaker_id
-  #     errors.add(:submitter_id, "can't be blank!") unless self.submitter_id
-  #   end
-  # end
+  def submitter_and_speakers_present
+    # remove the first stub element with empty string
+    speaker_ids.reject!(&:blank?)
+
+    errors.add(:speaker_ids, "can't be blank!") unless speaker_ids.present?
+    if speaker_ids.present?
+      errors.add(:speaker_ids, 'all speaker users should exist!') unless User.where(id: speaker_ids).count == speaker_ids.length
+    end
+
+    errors.add(:submitter_id, "can't be blank!") unless submitter_id.present?
+    if submitter_id.present?
+      errors.add(:submitter_id, 'user should exist!') unless User.where(id: submitter_id).take
+    end
+  end
 end
