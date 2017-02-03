@@ -144,9 +144,13 @@
             %i Hidden
       %tr
         %td
-          %b Biography
+          %b Biographies
         %td
-          = markdown(@event.submitter.biography)
+          - @event.speakers.each do |speaker|
+            - unless speaker.biography.blank?
+              %b
+                = speaker.name
+              = markdown(speaker.biography)
       %tr
         %td
           %b Submitted on

@@ -79,6 +79,8 @@ module Admin
     end
 
     def update
+      # @event.validate_owners = true
+      @users = User.all.order(:name)
       if @event.update_attributes(event_params)
 
         if request.xhr?
@@ -98,16 +100,17 @@ module Admin
       @url = admin_conference_program_events_path(@conference.short_title, @event)
       @users = User.all.order(:name)
       @languages = @program.languages_list
-      @event.validate_owners = true
+      @event.submitter = current_user
+      # @event.validate_owners = true
       @event.state = :confirmed
-
-      if @event.valid?
-        @event.event_users.new(user_id: params[:event][:submitter_id].to_i,
-                           event_role: 'submitter')
-        @event.speaker_ids.each do |speaker_id|
-          @event.event_users.new(user_id: speaker_id.to_i, event_role: 'speaker')
-        end
-      end
+      # byebug
+      # if @event.valid?
+      #   @event.event_users.new(user_id: params[:event][:submitter_id].to_i,
+      #                      event_role: 'submitter')
+      #   @event.speaker_ids.each do |speaker_id|
+      #     @event.event_users.new(user_id: speaker_id.to_i, event_role: 'speaker')
+      #   end
+      # end
 
       if @event.save
         ahoy.track 'Event submission', title: 'New submission'
@@ -190,7 +193,7 @@ module Admin
                                     :track_id, :state, :language, :is_highlight, :max_attendees,
                                     # Not used anymore?
                                     :proposal_additional_speakers, :user, :users_attributes,
-                                    :submitter_id, :speaker_ids => []
+                                    :speaker_ids => []
                                      )
     end
 

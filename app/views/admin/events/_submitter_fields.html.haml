@@ -3,10 +3,4 @@
   collection: options_for_select(@users.map {|user| ["#{user.name}", user.id]}, current_user.id),
   include_blank: true, label: 'Submitter', input_html: { class: 'select-help-toggle' }
 
-  = form.input :speaker_ids, as: :select,
-    collection: @users.map {|user| ["#{user.name}", user.id, ]},
-    include_blank: false, label: 'Speakers', input_html: { class: 'select-help-toggle', multiple: 'true' }
--else
-  = form.input :speaker_ids, as: :select,
-    collection: options_for_select(@users.map {|user| ["#{user.name}", user.id]}, @event.speakers.pluck(:id)),
-    include_blank: false, label: 'Speakers', input_html: { class: 'select-help-toggle', multiple: 'true' }
+
