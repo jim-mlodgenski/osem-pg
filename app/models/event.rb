@@ -1,8 +1,4 @@
 class Event < ActiveRecord::Base
-  attr_accessor :submitter_id
-  # attr_accessor :speaker_ids
-  # attr_accessor :validate_owners
-
   include ActiveRecord::Transitions
   has_paper_trail on: [:create, :update], ignore: [:updated_at, :guid, :week], meta: { conference_id: :conference_id }
 
@@ -48,8 +44,6 @@ class Event < ActiveRecord::Base
   validates :max_attendees, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_nil: true }
 
   validate :max_attendees_no_more_than_room_size
-
-  # validate :submitter_and_speakers_present, if: Proc.new { |event| event.validate_owners == true }
 
   scope :confirmed, -> { where(state: 'confirmed') }
   scope :canceled, -> { where(state: 'canceled') }
@@ -142,6 +136,18 @@ class Event < ActiveRecord::Base
   #     result.user
   #   end
   # end
+
+  # get event speakers with the event sumbmitter at the first position
+  # if the submitter is also a speaker for this event
+  def speakers_ordered
+    @speakers = speakers.to_a
+    @speakers << submitter unless @speakers.any?
+
+    if @speakers.reject! { |speaker| speaker == submitter }
+      @speakers.insert(0, submitter)
+    end
+    @speakers
+  end
 
   def transition_possible?(transition)
     self.class.state_machine.events_for(current_state).include?(transition)
@@ -309,22 +315,5 @@ class Event < ActiveRecord::Base
 
   def conference_id
     program.conference_id
-  end
-
-  def submitter_and_speakers_present
-    # remove the first stub element with empty string
-    speaker_ids.reject!(&:blank?)
-
-    errors.add(:speaker_ids, "can't be blank!") unless speaker_ids.present?
-    if speaker_ids.present?
-      errors.add(:speaker_ids, 'all speaker users should exist!') unless User.where(id: speaker_ids).count == speaker_ids.length
-    end
-
-    if new_record?
-      errors.add(:submitter_id, "can't be blank!") unless submitter_id.present?
-      if submitter_id.present?
-        errors.add(:submitter_id, 'user should exist!') unless User.where(id: submitter_id).take
-      end
-    end
   end
 end

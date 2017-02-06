@@ -13,13 +13,6 @@ class ProposalsController < ApplicationController
   end
 
   def show
-    @speakers = @event.speakers.to_a
-    @speakers << @event.submitter unless @speakers.any?
-
-    if @speakers.reject! { |speaker| speaker == @event.submitter }
-      @speakers.insert(0, @event.submitter)
-    end
-
     @event_schedule = @event.event_schedules.find_by(schedule_id: @program.selected_schedule_id)
   end
 
@@ -54,11 +47,6 @@ class ProposalsController < ApplicationController
 
     # User which creates the proposal is both `submitter` and `speaker` of proposal
     # by default.
-    # TODO: Allow submitter to add speakers to proposals
-    # @event.event_users.new(user: current_user,
-    #                        event_role: 'submitter')
-    # @event.event_users.new(user: current_user,
-    #                        event_role: 'speaker')
     @event.speakers = [current_user]
     @event.submitter = current_user
     if @event.save

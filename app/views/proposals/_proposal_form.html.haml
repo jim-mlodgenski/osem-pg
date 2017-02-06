@@ -8,8 +8,6 @@
       collection: options_for_select(@users.map {|user| ["#{user.name}", user.id]}, @event.speakers.pluck(:id)),
       include_blank: false, label: 'Speakers', input_html: { class: 'select-help-toggle', multiple: 'true' }
 
-    / = render 'submitter_fields', form: f
-
     - if @program.tracks.any?
       = f.input :track_id, as: :select,
                 collection: @program.tracks.map {|track| ["#{track.name}", track.id] },
@@ -66,7 +64,11 @@
 
 
   %p.text-right
-    = f.submit 'Update Proposal', class: 'btn btn-success'
+    - if @event.new_record?
+      = f.submit 'Create Proposal', class: 'btn btn-success'
+    - else
+      = f.submit 'Update Proposal', class: 'btn btn-success'
+
 :javascript
   $(document).ready(function() {
     $('#event_speaker_ids').selectize({

@@ -24,7 +24,7 @@
     .col-md-3
       %h3
         Presented by:
-      - @speakers.each do |speaker|
+      - @event.speakers_ordered.each do |speaker|
         .speakerinfo
           .row
             .col-md-4
