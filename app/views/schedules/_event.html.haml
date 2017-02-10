@@ -1,4 +1,4 @@
-.panel.panel-default.event-panel{ id: "link-#{event.id}", data: { trackid: event.track.try(:id) } }
+.panel.panel-default{ id: "link-#{event.id}", data: { trackid: event.track.try(:id) } }
   .panel-body
     - event.speakers_ordered.each do |speaker|
       = image_tag speaker.gravatar_url, :class => "img-circle pull-right all-speaker-pic", |
