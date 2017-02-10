@@ -112,6 +112,12 @@ body {
     filter: brightness(33%);
 }
 
+
+// make the navbar pills width a litter smaller to prevents accidental clicks while filling in some form
+.nav.mySidebar > li > a {
+  width: 85%;
+}
+
 .img-center {
   margin: 0 auto;
 }
