@@ -100,10 +100,12 @@
                 %i Hidden
             %td
               - if @program.show_voting?
-                - if speaker = event.speakers.first
-                  = link_to speaker.name, admin_user_path(speaker)
-                - else
-                  Unknown speaker
+                - event.speakers_ordered.each do |speaker|
+                  .speaker
+                    - if speaker
+                      = link_to speaker.name, admin_user_path(speaker)
+                    - else
+                      Unknown speaker
               - else
                 %i Hidden
 

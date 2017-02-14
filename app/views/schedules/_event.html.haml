@@ -1,6 +1,6 @@
-.panel.panel-default.event-panel{ id: "link-#{event.id}" }
+.panel.panel-default{ id: "link-#{event.id}", data: { trackid: event.track.try(:id) } }
   .panel-body
-    - if speaker = event.speakers.first
+    - event.speakers_ordered.each do |speaker|
       = image_tag speaker.avatar_url(version: 'medium'), :class => "img-circle pull-right all-speaker-pic", |
                                         :alt => speaker.name, |
                                         :title => speaker.name |

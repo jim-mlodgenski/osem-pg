@@ -1,8 +1,4 @@
 class Event < ActiveRecord::Base
-  attr_accessor :submitter_id
-  attr_accessor :speaker_id
-  # attr_accessor :should_validate_owners
-
   include ActiveRecord::Transitions
   has_paper_trail on: [:create, :update], ignore: [:updated_at, :guid, :week], meta: { conference_id: :conference_id }
 
@@ -12,7 +8,13 @@ class Event < ActiveRecord::Base
 
   has_many :event_users, dependent: :destroy
   has_many :users, through: :event_users
-  has_many :speakers, through: :event_users, source: :user
+
+  has_many :speaker_event_users, -> { where(event_role: 'speaker') }, class_name: 'EventUser'
+  has_many :speakers, through: :speaker_event_users, source: :user
+
+  has_one :submitter_event_user, -> { where(event_role: 'submitter') }, class_name: 'EventUser'
+  has_one  :submitter, through: :submitter_event_user, source: :user
+
   has_many :votes, dependent: :destroy
   has_many :voters, through: :votes, source: :user
   has_many :commercials, as: :commercialable, dependent: :destroy
@@ -27,6 +29,7 @@ class Event < ActiveRecord::Base
   belongs_to :program
 
   accepts_nested_attributes_for :event_users, allow_destroy: true
+  accepts_nested_attributes_for :speakers, allow_destroy: true
   accepts_nested_attributes_for :users
 
   before_create :generate_guid
@@ -37,11 +40,10 @@ class Event < ActiveRecord::Base
   validates :abstract, presence: true, unless: "event_type.internal_event"
   validates :event_type, presence: true
   validates :program, presence: true
+  validates :speakers, presence: true
   validates :max_attendees, numericality: { only_integer: true, greater_than_or_equal_to: 1, allow_nil: true }
 
   validate :max_attendees_no_more_than_room_size
-
-  # validate :submitter_and_speaker_present
 
   scope :confirmed, -> { where(state: 'confirmed') }
   scope :canceled, -> { where(state: 'canceled') }
@@ -119,20 +121,32 @@ class Event < ActiveRecord::Base
     @total_rating > 0 ? number_with_precision(@total_rating / @total.to_f, precision: 2, strip_insignificant_zeros: true) : 0
   end
 
-  def submitter
-    result = event_users.where(event_role: 'submitter').first
-    if result.nil?
-      user = nil
-      # Perhaps the event_users haven't been saved, if this is a new proposal
-      event_users.each do |u|
-        if u.event_role == 'submitter'
-          user = u.user
-        end
-      end
-      user
-    else
-      result.user
+  # def submitter
+  #   result = event_users.where(event_role: 'submitter').first
+  #   if result.nil?
+  #     user = nil
+  #     # Perhaps the event_users haven't been saved, if this is a new proposal
+  #     event_users.each do |u|
+  #       if u.event_role == 'submitter'
+  #         user = u.user
+  #       end
+  #     end
+  #     user
+  #   else
+  #     result.user
+  #   end
+  # end
+
+  # get event speakers with the event sumbmitter at the first position
+  # if the submitter is also a speaker for this event
+  def speakers_ordered
+    @speakers = speakers.to_a
+    @speakers << submitter unless @speakers.any?
+
+    if @speakers.reject! { |speaker| speaker == submitter }
+      @speakers.insert(0, submitter)
     end
+    @speakers
   end
 
   def transition_possible?(transition)
@@ -302,11 +316,4 @@ class Event < ActiveRecord::Base
   def conference_id
     program.conference_id
   end
-
-  # def submitter_and_speaker_present
-  #   if should_validate_owners
-  #     errors.add(:speaker_id, "can't be blank!") unless self.speaker_id
-  #     errors.add(:submitter_id, "can't be blank!") unless self.submitter_id
-  #   end
-  # end
 end

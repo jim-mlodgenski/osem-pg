@@ -1,4 +1,4 @@
-  module Admin
+module Admin
   class EventsController < Admin::BaseController
     load_and_authorize_resource :conference, find_by: :short_title
     load_and_authorize_resource :program, through: :conference, singleton: true
@@ -61,6 +61,7 @@
       @comments = @event.root_comments
       @comment_count = @event.comment_threads.count
       @user = @event.submitter
+      @users = User.all.order(:name)
       @url = admin_conference_program_event_path(@conference.short_title, @event)
       @languages = @program.languages_list
     end
@@ -78,6 +79,8 @@
     end
 
     def update
+      # @event.validate_owners = true
+      @users = User.all.order(:name)
       if @event.update_attributes(event_params)
 
         if request.xhr?
@@ -96,18 +99,18 @@
     def create
       @url = admin_conference_program_events_path(@conference.short_title, @event)
       @users = User.all.order(:name)
-
-      # @event.should_validate_owners = true
-      # @event.speaker_id = params[:event][:speaker_id].to_i
-      # @event.submitter_id = params[:event][:submitter_id].to_i
+      @languages = @program.languages_list
+      @event.submitter = current_user
+      # @event.validate_owners = true
       @event.state = :confirmed
-
-      if @event.valid?
-        @event.event_users.new(user_id: params[:event][:submitter_id].to_i,
-                           event_role: 'submitter')
-        @event.event_users.new(user_id: params[:event][:speaker_id].to_i,
-                           event_role: 'speaker')
-      end
+      # byebug
+      # if @event.valid?
+      #   @event.event_users.new(user_id: params[:event][:submitter_id].to_i,
+      #                      event_role: 'submitter')
+      #   @event.speaker_ids.each do |speaker_id|
+      #     @event.event_users.new(user_id: speaker_id.to_i, event_role: 'speaker')
+      #   end
+      # end
 
       if @event.save
         ahoy.track 'Event submission', title: 'New submission'
@@ -189,7 +192,9 @@
                                     # Set only in admin/events controller
                                     :track_id, :state, :language, :is_highlight, :max_attendees,
                                     # Not used anymore?
-                                    :proposal_additional_speakers, :user, :users_attributes)
+                                    :proposal_additional_speakers, :user, :users_attributes,
+                                    :speaker_ids => []
+                                     )
     end
 
     def comment_params
