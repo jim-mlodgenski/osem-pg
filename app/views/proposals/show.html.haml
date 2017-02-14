@@ -24,7 +24,7 @@
     .col-md-3
       .speakerinfo
         .col-md-12
-          = image_tag @speaker.gravatar_url(:size => 200), :class => "img-responsive img-rounded"
+          = image_tag @speaker.avatar_url(version: 'large'), :class => "img-responsive img-rounded"
         .col-md-12
           %h3
             by

@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   include Gravtastic
   gravtastic size: 32
 
+  mount_uploader :avatar, AvatarUploader, mount_on: :avatar_file_name
+
   before_create :setup_role
 
   # add scope
@@ -194,14 +196,22 @@ class User < ActiveRecord::Base
     proposals(conference).count
   end
 
-
   # Django passwords encryption support
   def valid_password?(pwd)
     begin
       super(pwd) # try the standard way
     rescue
-      p 'trying django way'
       Pbkdf2PasswordHasher.check_password(pwd,self.encrypted_password) # if failed, then try the django's way
+    end
+  end
+
+  def avatar_url(options={})
+    version = options[:version] || 'medium'
+    if self.avatar?
+      self.avatar.send version
+    else
+      size_map = {'large' => 200, 'medium' => 48, 'small' => 25, 'xsmall' => 18}
+      gravatar_url(size: size_map[version])
     end
   end
 
