@@ -58,19 +58,6 @@
       $("td.event").removeClass('transparent');
     }
   }
-  // change of active tab and the button title when a date is clicked
-  $(function() {
-    $('.date-tab').on('click', function(e) {
-      $('.li-dropdown-schedule').removeClass('active');
-      $('.dates-dropdown').find('.button-label').text($(this).text());
-    });
-
-    $('.track-filter-link').on('click', function(e) {
-      $('.li-dropdown-schedule-track').removeClass('active');
-      $('.tracks-dropdown').find('.button-label').text($(this).text());
-      filter_events($(this).attr('data-filter'))
-    });
-  });
 
   // hide the right and left controls when neccesary after moving the carousel
   $('.carousel').on('slid.bs.carousel', '',
@@ -87,6 +74,30 @@
 
   $(document).ready(function(){
     // hide the left control when the page is ready
+    var params = url_to_params(window.location.hash)
+
+    // change of active tab and the button title when a date is clicked
+    $('.date-tab').on('click', function(e) {
+      $('.li-dropdown-schedule').removeClass('active');
+      $('.dates-dropdown').find('.button-label').text($(this).text());
+      params['day'] = $(this).text()
+      window.location.hash = params_to_url(params['day'],params['track'])
+      // do not follow the link url to prevent overwriting of the locaiton hash we've just set
+      e.preventDefault()
+    });
+
+    $('.track-filter-link').on('click', function(e) {
+      $('.li-dropdown-schedule-track').removeClass('active');
+      $('.tracks-dropdown').find('.button-label').text($(this).text());
+      var track_id = $(this).attr('data-filter')
+      filter_events(track_id)
+
+      params['track'] = track_id
+      window.location.hash = params_to_url(params['day'],params['track'])
+      // do not follow the link url to prevent overwriting of the locaiton hash we've just set
+      e.preventDefault()
+    });
+
     $('.carousel').each(function() {
       if($(this).find('.first').hasClass('active')) {
         $(this).children('.left.carousel-control').hide();
@@ -104,14 +115,12 @@
       $(this).parent().carousel('next');
     });
 
+    // filter events if track is in params
+    params['track'] && $("a.track-filter-link[data-filter='" + params['track'] +"']").click()
     var day = "#{@current_day}";
     // we only go to the date tag in the url if the conference is not taking place now
-    if(day === ""){
+    if(day === "") {
       // use the date tag in the url to select a tab and the title of the button
-      var hash = window.location.hash;
-      if(hash && !(hash === '#schedule')){
-        hash && $('ul a[href="' + hash + '"]').tab('show');
-        $('button.dates-dropdown-button').text(hash.substr(1));
-      }
+      params['day'] && $('ul a[href="#' + params['day'] + '"]').click()
     }
   });

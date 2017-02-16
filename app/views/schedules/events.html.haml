@@ -18,7 +18,7 @@
               = link_to date, "##{date}", class: "program-selector#{ ' no-events-day' unless @conference.program.any_event_for_this_date?(date) }"
           - if @unscheduled_events.any?
             %li.li-dropdown-program
-              = link_to('Unscheduled', "#unscheduled", class: 'program-selector')
+              = link_to('Unscheduled', "#unscheduled")
 
     .col-md-6
       .dropdown.schedule-dropdown.tracks-dropdown
@@ -90,17 +90,34 @@
     }
   }
 
-  $('.track-filter-link').on('click', function(e) {
-      $('.li-dropdown-schedule-track').removeClass('active');
-      $('.tracks-dropdown').find('.button-label').text($(this).text());
-      filter_events($(this).attr('data-filter'))
-  });
-
-  $('.program-selector').on('click', function(e) {
-    $('.li-dropdown-program').removeClass('active');
-  });
-
   // Go to current date and time
   $(document).ready(function(){
+    var params = url_to_params(window.location.hash)
+
+    $('.track-filter-link').on('click', function(e) {
+        $('.li-dropdown-schedule-track').removeClass('active');
+        $('.tracks-dropdown').find('.button-label').text($(this).text());
+
+        var track_id = $(this).attr('data-filter')
+        filter_events(track_id)
+        params['day'] && $("a.program-selector[href='#" + params['day'] +"']").click()
+
+        params['track'] = track_id
+        window.location.hash = params_to_url(params['day'],params['track'])
+        // do not follow the link url to prevent overwriting of the locaiton hash we've just set
+        e.preventDefault()
+
+    });
+
+    $('.program-selector').on('click', function(e) {
+      $('.li-dropdown-program').removeClass('active');
+      params['day'] = $(this).text()
+      window.location.hash = params_to_url(params['day'],params['track'])
+      // do not follow the link url to prevent overwriting of the locaiton hash we've just set
+      e.preventDefault()
+    });
+
+    params['track'] && $("a.track-filter-link[data-filter='" + params['track'] +"']").click()
+    params['day'] && $("a.program-selector[href='#" + params['day'] +"']").click()
     document.getElementById("#{ @tag }").scrollIntoView();
   });

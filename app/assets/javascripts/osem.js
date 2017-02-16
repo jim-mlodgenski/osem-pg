@@ -192,3 +192,16 @@ window.build_dialog = function(selector, content) {
   $("body").append("<div id=\"" + selector + "\" class=\"modal fade\" role=\"dialog\">\n" + content + "</div>");
   $("#" + selector).modal();
 }
+
+  function url_to_params (hash) {
+    var parts = hash.substring(1).split('&')
+    return {
+      track: parts[1] ? parts[1].split('=')[1] : '',
+      day: parts[0]
+    }
+  }
+
+  function params_to_url(day, track) {
+    var trackpart = track ? '&' + 'track=' + track : ''
+    return day + trackpart
+  }
