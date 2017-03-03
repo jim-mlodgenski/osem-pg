@@ -121,32 +121,16 @@ class Event < ActiveRecord::Base
     @total_rating > 0 ? number_with_precision(@total_rating / @total.to_f, precision: 2, strip_insignificant_zeros: true) : 0
   end
 
-  # def submitter
-  #   result = event_users.where(event_role: 'submitter').first
-  #   if result.nil?
-  #     user = nil
-  #     # Perhaps the event_users haven't been saved, if this is a new proposal
-  #     event_users.each do |u|
-  #       if u.event_role == 'submitter'
-  #         user = u.user
-  #       end
-  #     end
-  #     user
-  #   else
-  #     result.user
-  #   end
-  # end
-
   # get event speakers with the event sumbmitter at the first position
   # if the submitter is also a speaker for this event
   def speakers_ordered
-    @speakers = speakers.to_a
-    @speakers << submitter unless @speakers.any?
+    speakers_list = speakers.to_a
 
-    if @speakers.reject! { |speaker| speaker == submitter }
-      @speakers.insert(0, submitter)
+    if speakers_list.reject! { |speaker| speaker == submitter }
+      speakers_list.unshift(submitter)
     end
-    @speakers
+
+    speakers_list
   end
 
   def transition_possible?(transition)

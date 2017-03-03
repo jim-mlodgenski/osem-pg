@@ -14,6 +14,7 @@ class ProposalsController < ApplicationController
 
   def show
     @event_schedule = @event.event_schedules.find_by(schedule_id: @program.selected_schedule_id)
+    @speakers_ordered = @event.speakers_ordered
   end
 
   def new

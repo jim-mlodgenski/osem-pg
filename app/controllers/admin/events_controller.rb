@@ -101,16 +101,6 @@ module Admin
       @users = User.all.order(:name)
       @languages = @program.languages_list
       @event.submitter = current_user
-      # @event.validate_owners = true
-      @event.state = :confirmed
-      # byebug
-      # if @event.valid?
-      #   @event.event_users.new(user_id: params[:event][:submitter_id].to_i,
-      #                      event_role: 'submitter')
-      #   @event.speaker_ids.each do |speaker_id|
-      #     @event.event_users.new(user_id: speaker_id.to_i, event_role: 'speaker')
-      #   end
-      # end
 
       if @event.save
         ahoy.track 'Event submission', title: 'New submission'
