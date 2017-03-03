@@ -5,8 +5,9 @@
         Users
         - if @users
           = "(#{@users.length})"
-        .pull-right
-          - if can? :create, User
+
+        - if can? :create, User && ENV['OSEM_ICHAIN_ENABLED'] != 'true'
+          .pull-right
             =link_to 'Add User', new_admin_user_path, :class => 'button btn btn-default btn-info'
 .row
   .col-md-12.table-responsive

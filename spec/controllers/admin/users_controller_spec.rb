@@ -50,4 +50,67 @@ describe Admin::UsersController do
       end
     end
   end
+
+  describe 'GET #new' do
+    it 'populates an array of users' do
+      get :new
+      expect(assigns(:user)).to be_instance_of(User)
+    end
+    it 'renders new user template' do
+      get :new
+      expect(response).to render_template :new
+    end
+  end
+
+  describe 'POST #create' do
+    context 'saves successfuly' do
+      before do
+        post :create, user: attributes_for(:user)
+      end
+
+      it 'redirects to admin users index path' do
+        expect(response).to redirect_to admin_users_path
+      end
+
+      it 'shows success message in flash notice' do
+        expect(flash[:notice]).to match('User successfully created.')
+      end
+
+      it 'creates new user' do
+        expect(User.find(user.id)).to be_instance_of(User)
+      end
+    end
+
+    context 'save fails' do
+      before do
+        allow_any_instance_of(User).to receive(:save).and_return(false)
+        post :create, user: attributes_for(:user)
+      end
+
+      it 'renders new template' do
+        expect(response).to render_template('new')
+      end
+
+      it 'shows error in flash message' do
+        expect(flash[:error]).to match("Creating User` failed: #{user.errors.full_messages.join('. ')}.")
+      end
+
+      it 'does not create new user' do
+        expect do
+          post :create, user: attributes_for(:user)
+        end.not_to change{ Event.count }
+      end
+    end
+
+    context 'OSEM_ICHAIN_ENABLED is true' do
+      before do
+        stub_const('ENV', ENV.to_hash.merge('OSEM_ICHAIN_ENABLED' => 'true'))
+        post :create, user: attributes_for(:user)
+      end
+
+      it 'shows error in flash message' do
+        expect(flash[:error]).to match('Cannot create user with ICHAIN auth enabled.')
+      end
+    end
+  end
 end
