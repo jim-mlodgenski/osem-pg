@@ -25,7 +25,7 @@
                 / = markdown(track.description)
                 - track.events.joins(:event_type).where(state: 'confirmed').each do |event|
                   %p
-                    = "#{event.title} by #{event.submitter.name}" unless event.event_type.internal_event?
+                    = "#{event.title} by #{event.speakers_ordered.first.try(:name) || 'Unknown Speaker'}" unless event.event_type.internal_event?
 
   - if @conference.program and @conference.program.schedule_public
     .row
