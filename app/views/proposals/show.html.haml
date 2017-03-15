@@ -1,13 +1,24 @@
 .container
-  .row
-    .col-md-12.page-header
-      %h2
-        = @event.title
-        - if @event.subtitle
-          %br
+  .row.page-header
+    .col-md-12
+      .row
+        %h2
+          = @event.title
+      - unless @event.subtitle.blank?
+        .row
           %small
             = @event.subtitle
-        .btn-group.pull-right
+      .row.pull-right
+        - if @event.scheduled?
+          = link_to "#", class: "btn btn-social-icon btn-twitter" do
+            %i.fa.fa-twitter
+          = link_to "#", class: "btn btn-social-icon btn-facebook" do
+            %i.fa.fa-facebook
+          = link_to "#", class: "btn btn-social-icon btn-google" do
+            %i.fa.fa-google
+          = link_to "#", class: "btn btn-social-icon btn-linkedin" do
+            %i.fa.fa-linkedin
+        .btn-group
           - if can? :update, @event
             = link_to 'Registrations', registrations_conference_program_proposal_path(@conference.short_title, @event), class: 'btn btn-mini btn-success'
           - if can? :edit, @event
