@@ -84,11 +84,14 @@
     function handleTopNavAnimation() {
         var top = $(window).scrollTop();
 
-        if (top > 50) {
-            $('#site-nav').addClass('navbar-solid');
-        }
-        else {
-            $('#site-nav').removeClass('navbar-solid');
+        // skip if user clicked navbar-toggle and the menu is shown
+        if($('.navbar-custom.expanded').length === 0) {
+          if (top > 50) {
+              $('#site-nav').addClass('navbar-solid');
+          }
+          else {
+              $('#site-nav').removeClass('navbar-solid');
+          }
         }
     }
     var triangle_tcs = tinycolor("#ffffff").monochromatic();
@@ -114,7 +117,7 @@
       $('.navbar-toggle').click(function(){
         var top = $(window).scrollTop();
         if(top <= 50) {
-          $('#site-nav').toggleClass('navbar-solid');
+          $('#site-nav').toggleClass('navbar-solid expanded');
         }
       });
     });
