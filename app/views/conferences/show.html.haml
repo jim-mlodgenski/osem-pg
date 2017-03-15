@@ -72,6 +72,7 @@
 
 - content_for :script_head do
   :javascript
+
     $(window).scroll(function () {
         handleTopNavAnimation();
       });
@@ -108,6 +109,13 @@
         $('#reg-hours').html(event.strftime('<h1>%H</h1> hours'));
         $('#reg-minutes').html(event.strftime('<h1>%M</h1> minutes'));
         $('#reg-seconds').html(event.strftime('<h1>%S</h1> seconds'));
+      });
+
+      $('.navbar-toggle').click(function(){
+        var top = $(window).scrollTop();
+        if(top <= 50) {
+          $('#site-nav').toggleClass('navbar-solid');
+        }
       });
     });
 
