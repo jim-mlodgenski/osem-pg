@@ -3,8 +3,8 @@
   %meta{ property: "og:url", content: conference_program_proposal_url(@conference.short_title, @event) }
   %meta{ property: "og:description", content: @event.abstract }
   %meta{ property: "og:site_name", content: (ENV['OSEM_NAME'] || 'OSEM') }
-  %meta{ property: "og:image", content: @speakers_ordered.first.avatar_url(version: 'medium') }
-  %meta{ property: "og:image:secure_url", content: @speakers_ordered.first.avatar_url(version: 'medium') }
+  %meta{ property: "og:image", content: asset_url(@speakers_ordered.first.avatar_url(version: 'medium')) }
+  %meta{ property: "og:image:secure_url", content: asset_url(@speakers_ordered.first.avatar_url(version: 'medium')) }
 
 .container
   .row.page-header
