@@ -1,3 +1,11 @@
+- content_for :head do
+  %meta{ property: "og:title", content: @event.title }
+  %meta{ property: "og:url", content: conference_program_proposal_url(@conference.short_title, @event) }
+  %meta{ property: "og:description", content: @event.abstract }
+  %meta{ property: "og:site_name", content: (ENV['OSEM_NAME'] || 'OSEM') }
+  %meta{ property: "og:image", content: @speakers_ordered.first.avatar_url(version: 'medium') }
+  %meta{ property: "og:image:secure_url", content: @speakers_ordered.first.avatar_url(version: 'medium') }
+
 .container
   .row.page-header
     .col-md-12
@@ -20,7 +28,7 @@
                 = link_to "#", class: "btn btn-social-icon btn-twitter prettySocial", data: {type: 'twitter', url: request.original_url, description: get_shareable_title(@event).truncate(120), via: get_twitter_handle(@event)} do
                   %i.fa.fa-twitter
               %li
-                = link_to "#", class: "btn btn-social-icon btn-facebook prettySocial", data: {type: 'facebook', url: request.original_url, description: @event.description, title: get_shareable_title(@event) } do
+                = link_to "#", class: "btn btn-social-icon btn-facebook prettySocial", data: {type: 'facebook', url: request.original_url, description: @event.abstract, title: get_shareable_title(@event) } do
                   %i.fa.fa-facebook
               %li
                 = link_to "#", class: "btn btn-social-icon btn-google prettySocial", data: {type: 'googleplus', url: request.original_url, description: get_shareable_title(@event), media: nil} do
@@ -49,7 +57,7 @@
         .speakerinfo
           .row
             .col-md-4
-              = image_tag speaker.gravatar_url(:size => 120), class: "img-responsive img-rounded"
+              = image_tag speaker.avatar_url(version: 'large'), class: "img-responsive img-rounded"
             .col-md-8
               %h4
                 = link_to speaker.name, user_path(speaker.id)
