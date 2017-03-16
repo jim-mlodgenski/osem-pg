@@ -26,6 +26,7 @@
 //= require ahoy
 //= require jquery-smooth-scroll
 //= require jquery.countdown
+//= require jquery.prettySocial
 //= require trianglify
 //= require tinycolor
 //= require bootstrap-markdown
