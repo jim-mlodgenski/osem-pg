@@ -112,6 +112,9 @@ body {
     filter: brightness(33%);
 }
 
+.navbar-solid .dropdown-menu > li > a {
+  color: black !important;
+}
 
 // make the navbar pills width a litter smaller to prevents accidental clicks while filling in some form
 .nav.mySidebar > li > a {
