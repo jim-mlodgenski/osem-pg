@@ -6,7 +6,7 @@
     - if @conference.program and @conference.program.schedule_public
       .col-md-12
         %p.cta-button.text-center
-          = link_to(conference_schedule_path(@conference.short_title), class: 'btn btn-default btn-lg') do
+          = link_to(events_conference_schedule_path(@conference.short_title), class: 'btn btn-default btn-lg') do
             Full Schedule
       %p.lead.text-center
         %span.notranslate
@@ -30,7 +30,7 @@
     .row
       .col-md-12
         %p.cta-button.text-center
-          = link_to(conference_schedule_path(@conference.short_title), class: 'btn btn-default btn-lg') do
+          = link_to(events_conference_schedule_path(@conference.short_title), class: 'btn btn-default btn-lg') do
             Full Schedule
 
 
