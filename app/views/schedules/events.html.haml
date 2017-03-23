@@ -2,9 +2,12 @@
   -if @events_schedules.any?
     = render partial: 'schedule_tabs',  locals: { active: 'program' }
 
+  .row.active-events
+
   %h1.text-center
-    Program for
     = @conference.title
+    Program
+
   .row
     .col-md-6
       .dropdown.program-dropdown
@@ -33,9 +36,7 @@
             %li.li-dropdown-schedule-track
               = link_to track.name, "#", "data-filter" => "#{track.id}", "class" => "track-filter-link"
 
-
   .row
-
     / scheduled events
     - date = nil
     - time = nil
@@ -73,6 +74,7 @@
           .unscheduled-event
             = render partial: 'event', locals: { event: event, event_schedule: nil }
 
+
 :javascript
   function filter_events(trackid) {
     $(".event-column").show();
@@ -90,9 +92,35 @@
     }
   }
 
+  function fetch_active() {
+    $.get("#{today_events_conference_schedule_path}",function(data) {
+      $('.active-events').html(data)
+      $('.prettySocial').prettySocial();
+    })
+  }
   // Go to current date and time
   $(document).ready(function(){
     var params = url_to_params(window.location.hash)
+
+    var today = document.getElementById("#{ @tag }");
+
+    if (today) {
+      today.scrollIntoView()
+      fetch_active()
+      setInterval(fetch_active, 1000 * 60)
+    }
+
+    $("body").on('click', '.eventblock', function(e) {
+      url = this.dataset.link
+      if($(e.target).parents('.sharemenu').length || e.target.classList.contains('share')) {
+        return
+      }
+
+      if(e.ctrlKey)
+        window.open(url,'_blank');
+      else
+        window.location = url;
+    });
 
     $('.track-filter-link').on('click', function(e) {
         $('.li-dropdown-schedule-track').removeClass('active');
@@ -119,5 +147,4 @@
 
     params['track'] && $("a.track-filter-link[data-filter='" + params['track'] +"']").click()
     params['day'] && $("a.program-selector[href='#" + params['day'] +"']").click()
-    document.getElementById("#{ @tag }").scrollIntoView();
   });

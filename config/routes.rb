@@ -126,6 +126,7 @@ Osem::Application.routes.draw do
     resource :schedule, only: [:show] do
       member do
         get :events
+        get :today_events
       end
     end
   end
