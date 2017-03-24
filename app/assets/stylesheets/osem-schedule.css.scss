@@ -140,7 +140,12 @@ padding: 3px 2px;
 }
 
 .speakerinfo {
-    margin-top: 40px;
+    margin-top: 20px;
+}
+
+.speakerinfo h4 {
+    word-break: break-all;
+    margin-top: 0px !important;
 }
 
 .speakerbio {

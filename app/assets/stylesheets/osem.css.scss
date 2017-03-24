@@ -212,7 +212,13 @@ p.comment-body {
 
 #proposal-info div dt, #proposal-info div dd {
   display: inline-block;
+  text-align: left;
 }
+
+#proposal-info dt, #proposal-info dd {
+  text-align: left;
+}
+
 
 .changeset{
   display: none;
