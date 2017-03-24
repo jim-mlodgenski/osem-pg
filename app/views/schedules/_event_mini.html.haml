@@ -14,6 +14,11 @@
       - if @current_time.between?(event_start_with_offset, event_end_with_offset)
         %span.label.label-success
           live now!
+          %span.track
+            %span.fa.fa-clock-o
+            %span
+              #{event_schedule.start_time.strftime('%H:%M')} - #{event_schedule.end_time.strftime('%H:%M')}
+
       - else
         %span.track
           %span.fa.fa-clock-o
