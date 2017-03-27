@@ -3,6 +3,6 @@
 
 - @today_event_schedules.each do |event_schedule|
   - event_end_with_offset = @current_time.change(hour: event_schedule.end_time.hour, min: event_schedule.end_time.min)
-  - if @current_time < event_end_with_offset
+  - if @current_time < event_end_with_offset && event_schedule.event.state == 'confirmed'
     .col-md-6
       = render partial: 'event_mini', locals: { event: event_schedule.event, event_schedule: event_schedule, current_time: @current_time }
