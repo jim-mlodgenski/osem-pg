@@ -16,7 +16,8 @@ class ProposalsController < ApplicationController
   def show
     @event_schedule = @event.event_schedules.find_by(schedule_id: @program.selected_schedule_id)
     @speakers_ordered = @event.speakers_ordered
-    @comments = @event.root_comments.find_comments_by_user(@current_user)
+    @comments = []
+    @comments = @event.root_comments.find_comments_by_user(@current_user) if @current_user
     @ratings = @event.votes.includes(:user)
   end
 
