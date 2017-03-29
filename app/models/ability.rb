@@ -96,6 +96,11 @@ class Ability
 
     # can manage the commercials of their own events
     can :manage, Commercial, commercialable_type: 'Event', commercialable_id: user.events.pluck(:id)
+    # FIXME: huge flaw!
+    # we should check whether the user is registered to this conference before allowing to provide feedack
+    can :leave_feedback, Event do |event|
+      true
+    end
   end
 
   # Abilities for signed in users with roles

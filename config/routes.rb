@@ -113,6 +113,8 @@ Osem::Application.routes.draw do
           get :registrations
           patch '/confirm' => 'proposals#confirm'
           patch '/restart' => 'proposals#restart'
+          post :comment
+          get :vote
         end
       end
     end

@@ -4,7 +4,8 @@ class ProposalsController < ApplicationController
   load_resource :program, through: :conference, singleton: true
   load_and_authorize_resource :event, parent: false, through: :program
   # We authorize manually in these actions
-  skip_authorize_resource :event, only: [:confirm, :restart, :withdraw]
+  skip_authorize_resource :event, only: [:confirm, :restart, :withdraw, :comment, :vote]
+  skip_authorization_check :only => [:comment, :vote]
 
   def index
     @event = @program.events.new
@@ -15,6 +16,8 @@ class ProposalsController < ApplicationController
   def show
     @event_schedule = @event.event_schedules.find_by(schedule_id: @program.selected_schedule_id)
     @speakers_ordered = @event.speakers_ordered
+    @comments = @event.root_comments.find_comments_by_user(@current_user)
+    @ratings = @event.votes.includes(:user)
   end
 
   def new
@@ -69,6 +72,36 @@ class ProposalsController < ApplicationController
     else
       flash[:error] = "Could not update proposal: #{@event.errors.full_messages.join(', ')}"
       render action: 'edit'
+    end
+  end
+
+  def comment
+    comment = Comment.new(comment_params)
+    comment.commentable = @event
+    comment.user_id = current_user.id
+    comment.save!
+    unless params[:parent].nil?
+      comment.move_to_child_of(params[:parent])
+    end
+
+    redirect_to conference_program_proposal_path(@conference.short_title, @event)
+  end
+
+  def vote
+    @ratings = @event.votes.includes(:user)
+
+    if (votes = current_user.votes.find_by_event_id(params[:id]))
+      votes.update_attributes(rating: params[:rating])
+    else
+      @myvote = @event.votes.build
+      @myvote.user = current_user
+      @myvote.rating = params[:rating]
+      @myvote.save
+    end
+
+    respond_to do |format|
+      format.html { redirect_to conference_program_proposal_path(@conference.short_title, @event) }
+      format.js
     end
   end
 
@@ -152,5 +185,9 @@ class ProposalsController < ApplicationController
 
   def user_params
     params.require(:user).permit(:email, :password, :password_confirmation, :username)
+  end
+
+  def comment_params
+    params.require(:comment).permit(:commentable, :body, :user_id)
   end
 end

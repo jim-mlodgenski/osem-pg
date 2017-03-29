@@ -112,6 +112,26 @@
               %dd
                 = link_to "Yes (#{registered_text(@event)})", new_conference_conference_registration_path(@conference.short_title), class: 'btn btn-xs btn-danger', disabled: !@event.registration_possible?
 
+  - if can? :leave_feedback, @event
+    .row
+      .row.h3
+        Feedback
+        %hr
+      - if @conference.program && @conference.program.rating && @conference.program.rating > 0
+        .row
+          = render partial: 'voting'
+        .row
+          .col-md-12
+            = semantic_form_for :comment, url: comment_conference_program_proposal_path(@conference.short_title, @event.id), method: :post do |f|
+              = f.input :body, :label => "Comment"
+              = f.submit 'Add Comment', class: 'btn btn-primary pull-right'
+              .row
+                &nbsp;
+        .row
+          - @comments.each do |comment|
+            .col-md-12
+              = render partial: 'comment', locals: { comment: comment, padding: 0}
+
 :javascript
   $(function () {
     $('.prettySocial').prettySocial();

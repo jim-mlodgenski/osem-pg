@@ -30,7 +30,6 @@ class SchedulesController < ApplicationController
   def today_events
     day = Time.find_zone(@conference.timezone).today
     @current_time = Time.current.in_time_zone(@conference.timezone)
-    # day = Date.new(2017,03,28)
     @today_event_schedules = @program.selected_event_schedules.where(
       start_time: day + @conference.start_hour.hours..day + @conference.end_hour.hours)
     render partial: 'today_events'
