@@ -25,7 +25,7 @@ module Admin
       @event_distribution = @conference.event_distribution
       @scheduled_event_distribution = @conference.scheduled_event_distribution
       @file_name = "events_for_#{@conference.short_title}"
-      # @event_export_option = params[:event_export_option]
+      @event_export_option = params[:event_export_option]
 
       respond_to do |format|
         format.html
