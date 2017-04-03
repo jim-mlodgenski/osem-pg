@@ -12,7 +12,7 @@ module Admin
       if @user.save
         redirect_to admin_users_path, notice: 'User successfully created.'
       else
-        flash[:error] = "Creating User` failed: #{@user.errors.full_messages.join('. ')}."
+        flash.now[:error] = "Creating User` failed: #{@user.errors.full_messages.join('. ')}."
         render :new
       end
     end
