@@ -44,7 +44,7 @@ class ProposalsController < ApplicationController
       if @user.save
         sign_in(@user)
       else
-        flash[:error] = "Could not save user: #{@user.errors.full_messages.join(', ')}"
+        flash.now[:error] = "Could not save user: #{@user.errors.full_messages.join(', ')}"
         render action: 'new'
         return
       end
@@ -58,7 +58,7 @@ class ProposalsController < ApplicationController
       ahoy.track 'Event submission', title: 'New submission'
       redirect_to conference_program_proposals_path(@conference.short_title), notice: 'Proposal was successfully submitted.'
     else
-      flash[:error] = "Could not submit proposal: #{@event.errors.full_messages.join(', ')}"
+      flash.now[:error] = "Could not submit proposal: #{@event.errors.full_messages.join(', ')}"
       render action: 'new'
     end
   end
@@ -71,7 +71,7 @@ class ProposalsController < ApplicationController
       redirect_to conference_program_proposals_path(conference_id: @conference.short_title),
                   notice: 'Proposal was successfully updated.'
     else
-      flash[:error] = "Could not update proposal: #{@event.errors.full_messages.join(', ')}"
+      flash.now[:error] = "Could not update proposal: #{@event.errors.full_messages.join(', ')}"
       render action: 'edit'
     end
   end
