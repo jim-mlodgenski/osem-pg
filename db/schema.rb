@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170109134654) do
+ActiveRecord::Schema.define(version: 20170418112254) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -435,6 +435,15 @@ ActiveRecord::Schema.define(version: 20170109134654) do
     t.string   "picture"
   end
 
+  create_table "sponsorship_infos", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "conference_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "sponsorship_infos", ["conference_id"], name: "index_sponsorship_infos_on_conference_id", using: :btree
+
   create_table "sponsorship_levels", force: :cascade do |t|
     t.string   "title"
     t.integer  "conference_id"
@@ -521,6 +530,7 @@ ActiveRecord::Schema.define(version: 20170109134654) do
     t.boolean  "is_admin",               default: false
     t.string   "username"
     t.boolean  "is_disabled",            default: false
+    t.string   "avatar"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -620,4 +630,5 @@ ActiveRecord::Schema.define(version: 20170109134654) do
     t.datetime "updated_at"
   end
 
+  add_foreign_key "sponsorship_infos", "conferences"
 end

@@ -15,11 +15,10 @@ body {
 }
 
 #footer {
-  position: absolute;
   bottom: 0;
   width: 100%;
   color: grey;
-
+  background-color: #2F2F2F;
   .container {
     padding: 5px;
   }
@@ -27,7 +26,7 @@ body {
 
 // different color for the splashpage footer
 .splash-footer {
-  background-color: #2F2F2F;
+  position: absolute;
 }
 
 .container {

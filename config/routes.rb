@@ -50,6 +50,7 @@ Osem::Application.routes.draw do
         resources :rooms, except: [:show]
       end
       resource :registration_period
+      resource :sponsorship_info
       resource :program do
         resource :cfp
         resources :tracks
@@ -125,6 +126,8 @@ Osem::Application.routes.draw do
     resources :ticket_purchases, only: [:create, :destroy]
     resources :payments, only: [:index, :new, :create]
     resource :subscriptions, only: [:create, :destroy]
+    resource :sponsors, only: [:show]
+
     resource :schedule, only: [:show] do
       member do
         get :events

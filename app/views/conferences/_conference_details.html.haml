@@ -25,7 +25,11 @@
               %p
                 = markdown(conference.description)
         .row
-          .col-md-10.col-md-offset-2
+          .col-md-3
+            - if conference.splashpage
+              - if conference.splashpage.include_sponsors && !conference.ended?
+                = link_to "Sponsor!", conference_sponsors_path(conference.short_title), :class =>"btn btn-warning pull-left"
+          .col-md-9
             .btn-group.pull-right.hidden-xs
               = render partial: 'conference_button_bar', locals: { conference: conference }
 

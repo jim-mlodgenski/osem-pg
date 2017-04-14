@@ -85,6 +85,7 @@ gem 'autoprefixer-rails'
 gem 'formtastic-bootstrap'
 gem 'formtastic', '~> 3.1.1'
 gem 'cocoon'
+gem 'pdfjs_viewer-rails'
 
 # as the JavaScript library
 gem 'jquery-rails'
