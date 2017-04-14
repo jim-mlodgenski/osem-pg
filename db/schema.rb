@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419111314) do
+ActiveRecord::Schema.define(version: 20170413143211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
+    t.string   "picture"
+    t.string   "website_link"
+    t.integer  "conference_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "ahoy_events", force: :cascade do |t|
     t.integer  "visit_id"
@@ -421,6 +435,7 @@ ActiveRecord::Schema.define(version: 20170419111314) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "include_cfp",               default: false
+    t.boolean  "include_activities",        default: false
   end
 
   create_table "sponsors", force: :cascade do |t|

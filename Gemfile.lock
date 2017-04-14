@@ -328,7 +328,7 @@ GEM
     pdfjs_viewer-rails (0.0.9)
       rails (> 4.2.0)
       sass-rails (~> 5.0)
-    pg (0.19.0)
+    pg (0.20.0)
     phantomjs (2.1.1.0)
     piwik_analytics (1.0.2)
       actionpack
@@ -603,8 +603,11 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-openid
   paper_trail
+<<<<<<< HEAD
   pbkdf2_password_hasher
   pdfjs_viewer-rails
+=======
+>>>>>>> 074a3bd... Add activities to a conference to display things to do around the venue
   pg
   phantomjs
   piwik_analytics (~> 1.0.1)
@@ -651,4 +654,8 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
+<<<<<<< HEAD
    1.13.6
+=======
+   1.14.6
+>>>>>>> 074a3bd... Add activities to a conference to display things to do around the venue
