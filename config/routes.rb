@@ -74,6 +74,7 @@ Osem::Application.routes.draw do
       resources :tickets
       resources :sponsors, except: [:show]
       resources :lodgings, except: [:show]
+      resources :activities, except: [:show]
       resources :targets, except: [:show]
       resources :campaigns, except: [:show]
       resources :emails, only: [:show, :update, :index]
