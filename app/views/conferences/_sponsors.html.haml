@@ -1,6 +1,7 @@
 = content_for :splash_nav do
   %li
-    %a.smoothscroll{ href: '#sponsors', data: {toggle: "collapse", target:".navbar-collapse" }} Sponsors
+    %a.smoothscroll.hidden-xs{ href: '#sponsors' } Sponsors
+    %a.smoothscroll.visible-xs{ href: '#sponsors', data: {toggle: "collapse", target:".navbar-collapse" }} Sponsors
 
 .container
   .row.no-gutter

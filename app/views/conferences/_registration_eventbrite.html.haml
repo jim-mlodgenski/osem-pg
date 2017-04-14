@@ -1,5 +1,6 @@
 = content_for :splash_nav do
   %li
-    %a.smoothscroll{ href: '#registration', data: {toggle: "collapse", target:".navbar-collapse" } } Tickets
+    %a.smoothscroll.hidden-xs{ href: '#registration' } Tickets
+    %a.smoothscroll.visible-xs{ href: '#registration', data: {toggle: "collapse", target:".navbar-collapse" } } Tickets
 
 = render 'eventbrite'
