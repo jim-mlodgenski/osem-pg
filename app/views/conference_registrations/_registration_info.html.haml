@@ -1,6 +1,6 @@
 - if @conference.questions.any?
   = render partial: 'conference_registrations/questions', locals: { f: f }
-- if @conference.program.events.with_registration_open.any? || @registration.events.any?
+- if !@conference.use_pg_flow && (@conference.program.events.with_registration_open.any? || @registration.events.any?)
   = f.inputs 'Pre-registration required for the following:' do
 
     - @registration.events_ordered.each do |event|
