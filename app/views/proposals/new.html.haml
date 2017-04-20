@@ -54,7 +54,8 @@
                   250
                 words.
 
-              = f.input :require_registration, label: 'Require participants to register to your event'
+              - if current_user.has_any_role? :admin, { name: :organizer, resource: @conference }, { name: :cfp, resource: @conference }
+                = f.input :require_registration, label: 'Require participants to register to your event'
 
               %p.text-right
                 = link_to '#description',  'data-toggle' => 'collapse', id: 'description_link' do
