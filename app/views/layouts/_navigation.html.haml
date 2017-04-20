@@ -68,8 +68,8 @@
                   %button.btn.btn-success.btn-block Sign in
               - else
                 = form_tag new_user_session_path do
-                  = text_field_tag 'user[login]', nil, id: 'user_login_dd', placeholder: 'Username / E-Mail', class: 'form-control'
-                  = password_field_tag 'user[password]', nil, id: 'user_password_dd', placeholder: 'Password',  class: 'form-control'
+                  = text_field_tag 'user[login]', nil, id: 'user_login_dd', placeholder: 'E-Mail'
+                  = password_field_tag 'user[password]', nil, id: 'user_password_dd', placeholder: 'Password'
                   %p.text-right
                     %small
                       Remember me
