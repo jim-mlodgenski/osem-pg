@@ -215,7 +215,6 @@ class Event < ActiveRecord::Base
   def progress_status
     {
       registered: self.program.conference.user_registered?(self.submitter),
-      commercials: self.commercials.any?,
       biography: !self.submitter.biography.blank?,
       subtitle: !self.subtitle.blank?,
       track: (!self.track.blank? unless self.program.tracks.empty?),
