@@ -19,6 +19,10 @@ class Registration < ActiveRecord::Base
   delegate :nickname, to: :user
   delegate :affiliation, to: :user
   delegate :username, to: :user
+  delegate :fist_name, to: :user
+  delegate :last_name, to: :user
+  delegate :title, to: :user
+  delegate :mobile, to: :user
 
   alias_attribute :other_needs, :other_special_needs
 

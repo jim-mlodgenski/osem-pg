@@ -25,7 +25,7 @@ module Admin
       # Variable @show_attributes holds the attributes that are visible for the 'show' action
       # If you want to change the attributes that are shown in the 'show' action of users
       # add/remove the attributes in the following string array
-      @show_attributes = %w(name email username nickname affiliation biography registered attended roles created_at
+      @show_attributes = %w(first_name last_name email username nickname affiliation title mobile biography registered attended roles created_at
                             updated_at sign_in_count current_sign_in_at last_sign_in_at
                             current_sign_in_ip last_sign_in_ip)
     end
@@ -50,7 +50,7 @@ module Admin
     private
 
     def user_params
-      params.require(:user).permit(:email, :name, :email_public, :biography, :nickname, :affiliation, :is_admin, :username, :login, :is_disabled,
+      params.require(:user).permit(:email, :first_name, :last_name, :email_public, :biography, :nickname, :affiliation, :title, :is_admin, :username, :login, :is_disabled,
                                    :tshirt, :mobile, :volunteer_experience, :languages, :to_confirm, role_ids: [])
     end
   end

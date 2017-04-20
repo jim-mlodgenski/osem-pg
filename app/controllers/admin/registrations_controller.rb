@@ -57,7 +57,7 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:name, :nickname, :affiliation)
+      params.require(:user).permit(:first_name, :last_name, :title, :mobile, :nickname, :affiliation)
     end
 
     def registration_params
