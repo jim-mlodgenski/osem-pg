@@ -31,6 +31,9 @@
                 data: { min_words: type.minimum_abstract_length, max_words: type.maximum_abstract_length }]},
                 include_blank: false, label: 'Type', input_html: { class: 'select-help-toggle' }
 
+              = f.input :difficulty_level, as: :select, collection: @conference.program.difficulty_levels, input_html: { class: 'select-help-toggle' },
+                include_blank: '(Please select)' if @conference.program.difficulty_levels.any?
+
               - if @program.languages.present?
                 = f.input :language, as: :select,
                   collection: @languages,
@@ -54,8 +57,9 @@
                   250
                 words.
 
-              - if current_user.has_any_role? :admin, { name: :organizer, resource: @conference }, { name: :cfp, resource: @conference }
-                = f.input :require_registration, label: 'Require participants to register to your event'
+              - unless !current_user
+                - if current_user.has_any_role? :admin, { name: :organizer, resource: @conference }, { name: :cfp, resource: @conference }
+                  = f.input :require_registration, label: 'Require participants to register to your event'
 
               %p.text-right
                 = link_to '#description',  'data-toggle' => 'collapse', id: 'description_link' do
