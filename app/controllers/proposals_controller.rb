@@ -36,6 +36,11 @@ class ProposalsController < ApplicationController
     # If user is not signed in then first create new user and then sign them in
     unless current_user
       @user = User.new(user_params)
+
+      if @conference.use_pg_flow
+        @user.username = @user.email
+      end
+
       authorize! :create, @user
       if @user.save
         sign_in(@user)
@@ -151,6 +156,7 @@ class ProposalsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :username)
+    params.require(:user).permit(:first_name, :last_name, :title, :affiliation, :mobile,
+                                 :email, :password, :password_confirmation, :username)
   end
 end
