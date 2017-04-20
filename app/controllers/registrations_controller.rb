@@ -28,7 +28,8 @@ class RegistrationsController < Devise::RegistrationsController
     end
     devise_parameter_sanitizer.for(:sign_up) do |u|
       u.
-          permit(:email, :password, :password_confirmation, :name, :username)
+          permit(:first_name, :last_name, :title, :affiliation, :mobile, :email, :password, :password_confirmation, :name, :username).
+          merge(username: :email)
     end
   end
 end
