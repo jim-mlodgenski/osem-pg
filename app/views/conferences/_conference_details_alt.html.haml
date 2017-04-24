@@ -28,8 +28,8 @@
                   = link_to "Register", new_conference_conference_registration_path(conference.short_title), class: "btn btn-success btn-lg btn-block btn-cta pull-right", disabled: conference.registration_limit_exceeded?
                   - if conference.registration_limit_exceeded?
                     Sorry, no places left
-            - unless conference.description.blank?
-              .description
+            .description
+              - unless conference.description.blank?
                 = markdown(conference.description)
             .row.h5
               .col-md-12
