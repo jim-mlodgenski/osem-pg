@@ -1,54 +1,43 @@
-.container
-  .row.text-center.text-muted.h1
-    Conferences
-  .row
-    .col-md-12
-      .page-header
-        %h2.muted Upcoming
-  - @current.each do |conference|
-    = render partial: 'conference_details', locals: { conference: conference, conference_class: 'conference-upcoming' }
-  - unless @current.any?
-    .row
-      .col-md-8.col-md-offset-2
-        .panel.panel-default.conference-panel
-          .panel-heading
-            .row
-              .col-md-10.text-muted
-                %h3 Nothing to show...
-          .panel-body
-            .row.text-center.h2.text-muted
-              There are no upcoming conferences for the moment
-              - if @recent.any?
-                %br
-                Perhaps you may want to check the recent conferences below
-  .row
-    .col-md-12
-      .page-header
-        %h2 Recent
-  - @recent.each do |conference|
-    = render partial: 'conference_details', locals: { conference: conference, conference_class: 'conference-recent' }
-  -if @antiquated and @antiquated.any?
+- content_for :conferences_nav do
+  %br
+
+.conferences
+  %section.active.col-md-12
     .row
       .col-md-12
-        .page-header
-          %button{ type: 'button', class: 'btn btn-link btn-sm', 'data-toggle' => 'collapse', 'data-target' => '#antiquated', 'aria-expanded' => 'true', 'aria-controls' => 'antiquated'}
-            %h2
-              Archive
-              %span.notranslate
-                = "(#{@antiquated.count})"
-              %i.fa.fa-chevron-right
-              %i.fa.fa-chevron-down{ style: 'display: none' }
-    #antiquated.collapse
-      - @antiquated.each do |conference|
-        = render partial: 'conference_details', locals: { conference: conference, conference_class: 'conference-archive'}
-
--content_for :script_body do
-  :javascript
-    $('#antiquated').on('hidden.bs.collapse', function () {
-      $( ".fa-chevron-down" ).hide();
-      $( ".fa-chevron-right" ).show();
-    })
-    $('#antiquated').on('shown.bs.collapse', function () {
-      $( ".fa-chevron-down" ).show();
-      $( ".fa-chevron-right" ).hide();
-    })
+        %h1.text-center.section-title Upcoming
+    - @current.each do |conference|
+      = render partial: 'conference_details_alt', locals: { conference: conference, conference_class: 'conference-upcoming' }
+    - unless @current.any?
+      .row
+        .col-md-8.col-md-offset-2
+          .panel.panel-default.conference-panel
+            .panel-heading
+              .row
+                .col-md-10.text-muted
+                  %h3 Nothing to show...
+            .panel-body
+              .row.text-center.h2.text-muted
+                There are no upcoming conferences for the moment
+                - if @recent.any?
+                  %br
+                  Perhaps you may want to check the recent conferences below
+  %section.recent.col-md-12
+    .row
+      .col-md-12
+        %h1.text-center.section-title Recent
+    - @recent.each do |conference|
+      = render partial: 'conference_details', locals: { conference: conference, conference_class: 'conference-recent' }
+  -if @antiquated and @antiquated.any?
+    %section.archive.col-md-12
+      .row
+        .col-md-12
+          %h1.text-center.section-title Archive
+          / %button{ type: 'button', class: 'btn btn-link btn-sm', 'data-toggle' => 'collapse', 'data-target' => '#antiquated', 'aria-expanded' => 'true', 'aria-controls' => 'antiquated'}
+          /     %span.notranslate
+          /       = "(#{@antiquated.count})"
+          /     %i.fa.fa-chevron-right
+          /     %i.fa.fa-chevron-down{ style: 'display: none' }
+      #antiquated
+        - @antiquated.each do |conference|
+          = render partial: 'conference_details', locals: { conference: conference, conference_class: 'conference-archive'}

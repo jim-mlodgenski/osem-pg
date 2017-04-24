@@ -1,11 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
 html {
   position: relative;
   min-height: 100%;
 }
 
+
 body {
   /* Margin bottom by 2 times the footer height */
-  margin-bottom: 36px;
+  // margin-bottom: 36px;
+  font-family: 'Roboto', sans-serif;
   /* Margin bottom by navbar height */
   // padding-top: 60px;
 }
@@ -18,7 +22,6 @@ body {
   bottom: 0;
   width: 100%;
   color: grey;
-  background-color: #2F2F2F;
   .container {
     padding: 5px;
   }
@@ -27,6 +30,7 @@ body {
 // different color for the splashpage footer
 .splash-footer {
   position: absolute;
+  // background-color: #2F2F2F;
 }
 
 .container {
@@ -53,7 +57,7 @@ body {
     text-shadow: 1px 1px 3px #000;
     color: #fff;
     font-size: 14px;
-    font-weight: 400;
+    font-weight: 500;
     text-transform: uppercase;
 }
 .navbar-custom .navbar-nav > li > a:focus, .navbar-custom .navbar-nav > li > a:hover {
@@ -80,12 +84,12 @@ body {
 }
 
 .navbar-solid {
-    background-color: white;
+    background-color: #fcfcfc;
     padding: 0 !important;
     transition: all 0.2s linear 0s;
-    -webkit-box-shadow: 0 3px 6px -6px black;
-    -moz-box-shadow: 0 3px 6px -6px black;
-    box-shadow: 0 3px 6px -6px black;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
+    -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
 }
 
 .navbar-solid a.navbar-brand {
@@ -99,7 +103,7 @@ body {
 .navbar-solid .navbar-nav > li > a {
     border-bottom: 2px solid transparent;
     text-shadow: none;
-    color: black;
+    color: #333333;
 }
 
 .navbar-solid .navbar-nav > li > a:focus, .navbar-solid .navbar-nav > li > a:hover {
@@ -112,7 +116,7 @@ body {
 }
 
 .navbar-solid .dropdown-menu > li > a {
-  color: black !important;
+  color: #333333 !important;
 }
 
 // make the navbar pills width a litter smaller to prevents accidental clicks while filling in some form

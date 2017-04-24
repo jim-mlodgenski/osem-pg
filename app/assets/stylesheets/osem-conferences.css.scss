@@ -1,20 +1,35 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,700,700italic,500italic,900,900italic|Roboto+Condensed:400,300,300italic,400italic,700,700italic|Roboto+Slab:400,100,300,700);
+.section-title {
+    font-weight: 300;
+    color: #333333;
+    margin-bottom: 20px;
+}
 
 .conference-panel {
-    font-family: 'Roboto', sans-serif;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23);
+    // -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
+    // -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
+    // box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
     border: none;
-    border-radius: 0px !important;
+    border-radius: 6px !important;
 }
 
-.conference-panel h3 {
-    font-family: 'Roboto', sans-serif;
-    margin-top: 0;
-    margin-bottom: 0px;
+
+.conference-panel .panel-body p, .conference-panel .panel-body h3 {
+    color: #333333;
 }
 
+// .conference-panel-alt p, .conference-panel-alt h3, h2, h1 {
+//     color: #333333;
+// }
 .conference-panel .panel-heading {
     color: white;
+    border-radius: 4px !important;
+    border-bottom-left-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+    h3 {
+        margin-top: 0;
+        margin-bottom: 0px;
+    }
 }
 .conference-panel .btn-cta {
     font-size: 26px;
@@ -27,4 +42,69 @@
 }
 .conference-archive .panel-heading {
     background-color: #757575;
+}
+
+.conferences {
+  section {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    color: #21313a;
+  }
+  section.active {
+    h1 {
+        color: white;
+    }
+    .register {
+      padding-top: 15px;
+    }
+    .conference-panel-alt {
+        border-radius: none !important;
+        -webkit-box-shadow: 0 10px 20px 1px rgba(0,0,0,0.35) ;
+        box-shadow: 0 10px 20px 1px rgba(0,0,0,0.35);
+
+        .panel-body {
+            padding-top: 0px;
+            padding-bottom: 0px;
+            border: none;
+        }
+
+
+        .rightblock {
+            p, h1, h2, h3 {
+                color: #424242;
+            }
+            h1 {
+                font-size: 50px
+            }
+
+            .description p {
+              font-size: 17px;
+            }
+            background-color: #eceff1;
+        }
+        .sponsorlink {
+          a {
+            color: #f0ad4e;
+            font-size: 20px;
+            font-weight:500;
+          }
+          padding-bottom: 20px;
+
+        }
+    }
+
+    background-color: #607d8b;
+    padding-top: 100px;
+    padding-bottom: 80px;
+  }
+
+  section.recent {
+      background-color: #F9F9F9;
+  }
+
+  section.archive {
+      background-color: #F2F2F2;
+
+
+  }
 }
