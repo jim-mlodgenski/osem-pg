@@ -83,6 +83,10 @@
         -webkit-box-shadow: 0 10px 20px 1px rgba(0,0,0,0.35) ;
         box-shadow: 0 10px 20px 1px rgba(0,0,0,0.35);
 
+        .equal {
+          display: flex;
+          flex-wrap: wrap;
+        }
         .panel-body {
             padding-top: 0px;
             padding-bottom: 0px;
