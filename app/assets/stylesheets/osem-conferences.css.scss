@@ -6,21 +6,14 @@
 
 .conference-panel {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 5px 0 rgba(0, 0, 0, 0.23);
-    // -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
-    // -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
-    // box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
     border: none;
     border-radius: 6px !important;
 }
-
 
 .conference-panel .panel-body p, .conference-panel .panel-body h3 {
     color: #333333;
 }
 
-// .conference-panel-alt p, .conference-panel-alt h3, h2, h1 {
-//     color: #333333;
-// }
 .conference-panel .panel-heading {
     color: white;
     border-radius: 4px !important;
@@ -57,6 +50,34 @@
     .register {
       padding-top: 15px;
     }
+
+    .conf-nav {
+      padding-bottom: 20px;
+
+      li > a{
+        color: white;
+      }
+
+      li > a:hover{
+       background-color: #546e7a;
+      }
+
+      li.active {
+        background-color: transparent;
+      }
+
+      li.active > a{
+        font-weight: 800;
+        background-color: #455a64;
+        text-decoration: underline;
+      }
+    }
+
+    .center-pills {
+      display: flex;
+      justify-content: center;
+    }
+
     .conference-panel-alt {
         border-radius: none !important;
         -webkit-box-shadow: 0 10px 20px 1px rgba(0,0,0,0.35) ;
@@ -67,7 +88,6 @@
             padding-bottom: 0px;
             border: none;
         }
-
 
         .rightblock {
             p, h1, h2, h3 {
@@ -94,7 +114,6 @@
             font-weight:500;
           }
           padding-bottom: 20px;
-
         }
     }
 
@@ -109,7 +128,5 @@
 
   section.archive {
       background-color: #F2F2F2;
-
-
   }
 }

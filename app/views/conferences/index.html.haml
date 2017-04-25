@@ -6,9 +6,19 @@
     .row
       .col-md-12
         %h1.text-center.section-title Upcoming
-    - @current.each do |conference|
-      = render partial: 'conference_details_alt', locals: { conference: conference, conference_class: 'conference-upcoming' }
-    - unless @current.any?
+    - if @current.any?
+      .row
+        .col-md-6.col-md-offset-3
+          %ul.nav.nav-pills.center-pills.conf-nav
+            - @current.each_with_index do |conference, index|
+              %li{role: "presentation", class: ('active' if index == 0)}
+                %a{href: "##{conference.short_title}", data: {toggle: 'tab'}} #{conference.short_title}
+      .row.tab-content
+        - @current.each_with_index do |conference, index|
+          .tab-pane.fade{id: conference.short_title, class: ('in active' if index == 0)}
+            = render partial: 'conference_details_alt', locals: { conference: conference, conference_class: 'conference-upcoming' }
+
+    - else
       .row
         .col-md-8.col-md-offset-2
           .panel.panel-default.conference-panel
@@ -41,3 +51,5 @@
       #antiquated
         - @antiquated.each do |conference|
           = render partial: 'conference_details', locals: { conference: conference, conference_class: 'conference-archive'}
+
+
