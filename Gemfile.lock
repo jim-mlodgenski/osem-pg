@@ -1,10 +1,3 @@
-GIT
-  remote: https://github.com/gilesbowkett/trucker.git
-  revision: 9159e0c01b9b30bbb8e49c706af7648c212891f3
-  branch: rails31
-  specs:
-    trucker (0.5.1)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -323,7 +316,6 @@ GEM
       request_store (~> 1.1)
     parser (2.3.0.3)
       ast (~> 2.2)
-    pbkdf2_password_hasher (0.2.0)
     pdf-core (0.2.5)
     pdfjs_viewer-rails (0.0.9)
       rails (> 4.2.0)
@@ -603,11 +595,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-openid
   paper_trail
-<<<<<<< HEAD
-  pbkdf2_password_hasher
   pdfjs_viewer-rails
-=======
->>>>>>> 074a3bd... Add activities to a conference to display things to do around the venue
   pg
   phantomjs
   piwik_analytics (~> 1.0.1)
@@ -645,7 +633,6 @@ DEPENDENCIES
   stripe-ruby-mock
   timecop
   transitions
-  trucker!
   turbolinks
   uglifier (>= 1.3.0)
   unobtrusive_flash (>= 3)
@@ -654,8 +641,4 @@ DEPENDENCIES
   whenever
 
 BUNDLED WITH
-<<<<<<< HEAD
-   1.13.6
-=======
    1.14.6
->>>>>>> 074a3bd... Add activities to a conference to display things to do around the venue
