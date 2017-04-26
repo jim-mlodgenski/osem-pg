@@ -4,11 +4,8 @@
       .row.equal
         .col-md-4.leftblock
           = image_tag(conference.picture_url, class: 'img-responsive') if conference.picture?
-          .col-md-12.text-center.sponsorlink
-            - if conference.splashpage
-              - if conference.splashpage.include_sponsors && !conference.ended?
-                = link_to "Become a sponsor!", conference_sponsors_path(conference.short_title)
-        .col-md-8.rightblock
+
+        .col-md-8.rightblock.grey
           .row
             .col-md-9
               %h1
@@ -31,12 +28,21 @@
               - unless conference.description.blank?
                 = markdown(conference.description)
           .row.h5
-            .col-md-12
-              .btn-group.pull-right.hidden-xs
-                = render partial: 'conference_button_bar', locals: { conference: conference }
 
-              .btn-group-vertical.visible-xs
-                = render partial: 'conference_button_bar', locals: { conference: conference }
+      .row
+        .col-md-4.visible-xs.grey
+          - if conference.splashpage
+            - if conference.splashpage.include_sponsors && !conference.ended?
+              = link_to "Become a sponsor!", conference_sponsors_path(conference.short_title), class: 'btn btn-warning btn-block btn-outline'
+        .col-md-4.hidden-xs.padded
+          - if conference.splashpage
+            - if conference.splashpage.include_sponsors && !conference.ended?
+              = link_to "Become a sponsor!", conference_sponsors_path(conference.short_title), class: 'btn btn-warning btn-block btn-outline'
+        .col-md-8.grey.padded
+          .btn-group.pull-right.hidden-xs
+            = render partial: 'conference_button_bar', locals: { conference: conference }
 
+          .btn-group-vertical.visible-xs
+            = render partial: 'conference_button_bar', locals: { conference: conference }
 
 

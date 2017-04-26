@@ -105,19 +105,15 @@
               font-size: 17px;
             }
 
-            .description {
-              min-height: 130px;
-            }
-
-            background-color: #eceff1;
         }
-        .sponsorlink {
-          a {
-            color: #f0ad4e;
-            font-size: 20px;
-            font-weight:500;
-          }
-          padding-bottom: 20px;
+
+        .grey {
+          background-color: #eceff1;
+        }
+
+        .padded {
+          padding-top: 15px;
+          padding-bottom: 15px;
         }
     }
 
@@ -133,4 +129,39 @@
   section.archive {
       background-color: #F2F2F2;
   }
+}
+
+
+.btn-outline {
+    background-color: transparent;
+    color: inherit;
+    transition: all .5s;
+}
+
+.btn-primary.btn-outline {
+    color: #428bca;
+}
+
+.btn-success.btn-outline {
+    color: #5cb85c;
+}
+
+.btn-info.btn-outline {
+    color: #5bc0de;
+}
+
+.btn-warning.btn-outline {
+    color: #f0ad4e;
+}
+
+.btn-danger.btn-outline {
+    color: #d9534f;
+}
+
+.btn-primary.btn-outline:hover,
+.btn-success.btn-outline:hover,
+.btn-info.btn-outline:hover,
+.btn-warning.btn-outline:hover,
+.btn-danger.btn-outline:hover {
+    color: #fff;
 }
