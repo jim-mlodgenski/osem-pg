@@ -79,7 +79,7 @@ gem 'autoprefixer-rails'
 gem 'formtastic-bootstrap'
 gem 'formtastic', '~> 3.1.1'
 gem 'cocoon'
-gem 'pdfjs_viewer-rails'
+# gem 'pdfjs_viewer-rails'#, :git => 'https://github.com/TinderBox/pdfjs_viewer-rails.git', :branch => 'pdfjs-1.5.188'
 
 # as the JavaScript library
 gem 'jquery-rails'

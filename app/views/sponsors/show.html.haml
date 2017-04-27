@@ -25,12 +25,12 @@
                 .h3
                   Conference Prospectus
 
-              .col-md-2.col-md-offset-4.form-group
-                .btn.btn-info.btn-block.btn-lg{data: { toggle: 'modal', target: '#modal_viewprospectus' }}
-                  %span.fa.fa-eye{aria: {hidden: true}}
-                  View
+              / .col-md-2.col-md-offset-4.form-group
+              /   .btn.btn-info.btn-block.btn-lg{data: { toggle: 'modal', target: '#modal_viewprospectus' }}
+              /     %span.fa.fa-eye{aria: {hidden: true}}
+              /     View
 
-              .col-md-2.form-group
+              .col-md-2.col-md-offset-5.form-group
                 = link_to @conference.sponsorship_info.prospectus_url, class: 'btn btn-info btn-block btn-lg' do
                   %span.fa.fa-download{aria: {hidden: true}}
                   Download
