@@ -316,6 +316,7 @@ GEM
       request_store (~> 1.1)
     parser (2.3.0.3)
       ast (~> 2.2)
+    pbkdf2_password_hasher (0.2.0)
     pdf-core (0.2.5)
     pdfjs_viewer-rails (0.0.9)
       rails (> 4.2.0)
@@ -595,6 +596,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   omniauth-openid
   paper_trail
+  pbkdf2_password_hasher
   pdfjs_viewer-rails
   pg
   phantomjs

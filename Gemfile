@@ -23,6 +23,9 @@ gem 'responders', '~> 2.0'
 # comment the mysql gem above if using Postgres
 gem 'pg'
 
+#support for Django password hashes
+gem 'pbkdf2_password_hasher'
+
 # for observing records
 gem 'rails-observers'
 
