@@ -107,6 +107,7 @@
                                    x_colors: triangle_colors
                                   });
         $('#callforpapers').css('background-image', 'url("' + pattern.png() + '")');
+        $('#banner').css('background-image', 'url("#{image_path "#{@conference.short_title}.jpg"}")');
       });
       $('#wrapper').countdown('#{@conference.registration_period.end_date.strftime}', function(event) {
         $('#reg-days').html(event.strftime('<h1>%D</h1> days'));
