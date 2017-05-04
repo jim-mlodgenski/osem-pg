@@ -185,7 +185,7 @@ module Admin
                                          :vpositions_attributes, :use_volunteers, :color,
                                          :sponsorship_levels_attributes, :sponsors_attributes,
                                          :targets, :targets_attributes,
-                                         :campaigns, :campaigns_attributes, :registration_limit, :require_itinerary)
+                                         :campaigns, :campaigns_attributes, :registration_limit, :require_itinerary, :code_ids)
     end
   end
 end
