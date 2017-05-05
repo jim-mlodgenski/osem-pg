@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170419111314) do
+ActiveRecord::Schema.define(version: 20170505090320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -97,26 +97,27 @@ ActiveRecord::Schema.define(version: 20170419111314) do
   end
 
   create_table "conferences", force: :cascade do |t|
-    t.string   "guid",                               null: false
-    t.string   "title",                              null: false
-    t.string   "short_title",                        null: false
-    t.string   "timezone",                           null: false
-    t.date     "start_date",                         null: false
-    t.date     "end_date",                           null: false
+    t.string   "guid",                                 null: false
+    t.string   "title",                                null: false
+    t.string   "short_title",                          null: false
+    t.string   "timezone",                             null: false
+    t.date     "start_date",                           null: false
+    t.date     "end_date",                             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "logo_file_name"
     t.integer  "revision"
-    t.boolean  "use_vpositions",     default: false
-    t.boolean  "use_vdays",          default: false
+    t.boolean  "use_vpositions",       default: false
+    t.boolean  "use_vdays",            default: false
     t.boolean  "use_volunteers"
     t.string   "color"
     t.text     "events_per_week"
     t.text     "description"
-    t.integer  "registration_limit", default: 0
+    t.integer  "registration_limit",   default: 0
     t.string   "picture"
-    t.integer  "start_hour",         default: 9
-    t.integer  "end_hour",           default: 20
+    t.integer  "start_hour",           default: 9
+    t.integer  "end_hour",             default: 20
+    t.string   "background_file_name"
   end
 
   create_table "conferences_questions", id: false, force: :cascade do |t|

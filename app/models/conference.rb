@@ -50,6 +50,7 @@ class Conference < ActiveRecord::Base
   accepts_nested_attributes_for :campaigns, allow_destroy: true
 
   mount_uploader :picture, PictureUploader, mount_on: :logo_file_name
+  mount_uploader :background, BackgroundUploader, mount_on: :background_file_name
 
   validates_presence_of :title,
                         :short_title,
