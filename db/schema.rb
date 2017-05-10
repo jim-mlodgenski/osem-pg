@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170505090320) do
+ActiveRecord::Schema.define(version: 20170420142342) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -118,6 +118,8 @@ ActiveRecord::Schema.define(version: 20170505090320) do
     t.integer  "start_hour",           default: 9
     t.integer  "end_hour",             default: 20
     t.string   "background_file_name"
+    t.boolean  "require_itinerary"
+    t.boolean  "use_pg_flow",        default: true
   end
 
   create_table "conferences_questions", id: false, force: :cascade do |t|
@@ -548,6 +550,9 @@ ActiveRecord::Schema.define(version: 20170505090320) do
     t.string   "username"
     t.boolean  "is_disabled",            default: false
     t.string   "avatar"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "title"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

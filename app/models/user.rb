@@ -82,7 +82,7 @@ class User < ActiveRecord::Base
   end
 
   def name
-    self[:name].blank? ? username : self[:name]
+    self[:name].blank? ? first_name.to_s + " " + last_name.to_s : self[:name]
   end
 
   ##

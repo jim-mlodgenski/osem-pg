@@ -46,6 +46,10 @@ class ConferenceRegistrationsController < ApplicationController
       @user = current_user
     end
 
+    if @conference.use_pg_flow
+        @user.username = @user.email
+    end
+
     @registration.user = @user
     authorize! :create, @registration
 
@@ -105,18 +109,21 @@ class ConferenceRegistrationsController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :email, :name, :password, :password_confirmation)
+    params.require(:user).permit(:first_name, :last_name, :title, :affiliation, :mobile, 
+      :username, :email, :name, :password, :password_confirmation)
   end
 
   def registration_params
-    params.require(:registration).
-        permit(
+    # All parameters can be optional at least initially so no params are required
+    params.permit(
+          :registration,
           :conference_id, :arrival, :departure,
           :volunteer,
           vchoice_ids: [], qanswer_ids: [],
           qanswers_attributes: [],
           event_ids: [],
           user_attributes: [
+            :first_name, :last_name, :title, :affiliation, :mobile,
             :username, :email, :name, :password, :password_confirmation]
     )
   end

@@ -12,10 +12,13 @@ wb.add_worksheet(name: 'registrations') do |sheet|
   @registrations.each do |registration|
     row = []
     row << ( registration.attended ? 'X' : '' )
-    row << registration.name
+    row << registration.first_name
+    row << registration.last_name
     row << registration.nickname
     row << registration.affiliation
+    row << registration.title
     row << registration.email
+    row << registration.mobile
     row << registration.arrival.to_s
     row << registration.departure.to_s
     @conference.questions.each do |question|

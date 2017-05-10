@@ -19,7 +19,7 @@
       .panel-body
         .row
           .col-md-4
-            = image_tag(conference.picture_url, class: 'img-responsive') if conference.picture?
+            = image_tag(conference.picture_url, class: 'img-responsive center-block') if conference.picture?
           .col-md-8
             - unless conference.description.blank?
               %p
