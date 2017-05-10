@@ -18,10 +18,14 @@ var Schedule = {
     if(event_schedule_id != null){
       var my_url = url + '/' + event_schedule_id;
       var success_callback = function(data) {
-        console.log(data);
-        e.attr("event_schedule_id", null);
-        e.appendTo($(".unscheduled-events"));
-        e.find(".schedule-event-delete-button").hide();
+        if (data.event_state === 'confirmed') {
+          e.attr("event_schedule_id", null);
+          e.appendTo($(".unscheduled-events"));
+          e.find(".schedule-event-delete-button").hide();
+        } else {
+          // cancelled events should not be returned to the candidates list
+          e.remove()
+        }
       }
       var error_callback = function(data) {
         console.log(data);
@@ -78,9 +82,6 @@ var Schedule = {
 };
 
 $(document).ready( function() {
-  // hide the remove button for unscheduled events
-  $('.unscheduled-events .schedule-event-delete-button').hide();
-
   // set events as draggable
   $('.schedule-event').draggable({
     snap: '.schedule-room-slot',

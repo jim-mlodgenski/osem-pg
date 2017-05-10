@@ -30,6 +30,7 @@ class Ability
   # Abilities for not signed in users (guests)
   def not_signed_in
     can [:index], Conference
+    can [:redirect_to_current], Conference
     can [:show], Conference do |conference|
       conference.splashpage && conference.splashpage.public == true
     end
@@ -95,6 +96,11 @@ class Ability
 
     # can manage the commercials of their own events
     can :manage, Commercial, commercialable_type: 'Event', commercialable_id: user.events.pluck(:id)
+    # FIXME: huge flaw!
+    # we should check whether the user is registered to this conference before allowing to provide feedack
+    can :leave_feedback, Event do |event|
+      true
+    end
   end
 
   # Abilities for signed in users with roles
@@ -173,6 +179,7 @@ class Ability
     can :manage, Room, venue: { conference_id: conf_ids_for_organizer}
     can :manage, Sponsor, conference_id: conf_ids_for_organizer
     can :manage, SponsorshipLevel, conference_id: conf_ids_for_organizer
+    can :manage, SponsorshipInfo, conference_id: conf_ids_for_organizer
     can :manage, Ticket, conference_id: conf_ids_for_organizer
     can :index, Comment, commentable_type: 'Event',
                          commentable_id: Event.where(program_id: Program.where(conference_id: conf_ids_for_organizer).pluck(:id)).pluck(:id)

@@ -4,7 +4,8 @@ class ProposalsController < ApplicationController
   load_resource :program, through: :conference, singleton: true
   load_and_authorize_resource :event, parent: false, through: :program
   # We authorize manually in these actions
-  skip_authorize_resource :event, only: [:confirm, :restart, :withdraw]
+  skip_authorize_resource :event, only: [:confirm, :restart, :withdraw, :comment, :vote]
+  skip_authorization_check :only => [:comment, :vote]
 
   def index
     @event = @program.events.new
@@ -13,9 +14,11 @@ class ProposalsController < ApplicationController
   end
 
   def show
-    # FIXME: We should show more than the first speaker
-    @speaker = @event.speakers.first || @event.submitter
     @event_schedule = @event.event_schedules.find_by(schedule_id: @program.selected_schedule_id)
+    @speakers_ordered = @event.speakers_ordered
+    @comments = []
+    @comments = @event.root_comments.find_comments_by_user(@current_user) if @current_user
+    @ratings = @event.votes.includes(:user)
   end
 
   def new
@@ -26,6 +29,7 @@ class ProposalsController < ApplicationController
 
   def edit
     @url = conference_program_proposal_path(@conference.short_title, params[:id])
+    @users = User.all.order(:name)
     @languages = @program.languages_list
   end
 
@@ -45,7 +49,7 @@ class ProposalsController < ApplicationController
       if @user.save
         sign_in(@user)
       else
-        flash[:error] = "Could not save user: #{@user.errors.full_messages.join(', ')}"
+        flash.now[:error] = "Could not save user: #{@user.errors.full_messages.join(', ')}"
         render action: 'new'
         return
       end
@@ -53,29 +57,57 @@ class ProposalsController < ApplicationController
 
     # User which creates the proposal is both `submitter` and `speaker` of proposal
     # by default.
-    # TODO: Allow submitter to add speakers to proposals
-    @event.event_users.new(user: current_user,
-                           event_role: 'submitter')
-    @event.event_users.new(user: current_user,
-                           event_role: 'speaker')
+    @event.speakers = [current_user]
+    @event.submitter = current_user
     if @event.save
       ahoy.track 'Event submission', title: 'New submission'
       redirect_to conference_program_proposals_path(@conference.short_title), notice: 'Proposal was successfully submitted.'
     else
-      flash[:error] = "Could not submit proposal: #{@event.errors.full_messages.join(', ')}"
+      flash.now[:error] = "Could not submit proposal: #{@event.errors.full_messages.join(', ')}"
       render action: 'new'
     end
   end
 
   def update
     @url = conference_program_proposal_path(@conference.short_title, params[:id])
+    @users = User.all.order(:name)
 
     if @event.update(event_params)
       redirect_to conference_program_proposals_path(conference_id: @conference.short_title),
                   notice: 'Proposal was successfully updated.'
     else
-      flash[:error] = "Could not update proposal: #{@event.errors.full_messages.join(', ')}"
+      flash.now[:error] = "Could not update proposal: #{@event.errors.full_messages.join(', ')}"
       render action: 'edit'
+    end
+  end
+
+  def comment
+    comment = Comment.new(comment_params)
+    comment.commentable = @event
+    comment.user_id = current_user.id
+    comment.save!
+    unless params[:parent].nil?
+      comment.move_to_child_of(params[:parent])
+    end
+
+    redirect_to conference_program_proposal_path(@conference.short_title, @event)
+  end
+
+  def vote
+    @ratings = @event.votes.includes(:user)
+
+    if (votes = current_user.votes.find_by_event_id(params[:id]))
+      votes.update_attributes(rating: params[:rating])
+    else
+      @myvote = @event.votes.build
+      @myvote.user = current_user
+      @myvote.rating = params[:rating]
+      @myvote.save
+    end
+
+    respond_to do |format|
+      format.html { redirect_to conference_program_proposal_path(@conference.short_title, @event) }
+      format.js
     end
   end
 
@@ -152,11 +184,17 @@ class ProposalsController < ApplicationController
   def event_params
     params.require(:event).permit(:event_type_id, :track_id, :difficulty_level_id,
                                   :title, :subtitle, :abstract, :description,
-                                  :require_registration, :max_attendees, :language)
+                                  :require_registration, :max_attendees, :language,
+                                  :speaker_ids => []
+                                  )
   end
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :title, :affiliation, :mobile,
                                  :email, :password, :password_confirmation, :username)
+  end
+
+  def comment_params
+    params.require(:comment).permit(:commentable, :body, :user_id)
   end
 end

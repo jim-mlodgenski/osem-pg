@@ -142,6 +142,10 @@
   = link_if_alive version, sponsorship_level.title,
           admin_conference_sponsorship_levels_path(conference_id: Conference.find(version.conference_id).short_title)
 
+- when 'SponsorshipInfo'
+  = link_if_alive version, 'sponsorship information',
+          admin_conference_sponsorship_info_path(conference_id: Conference.find(version.conference_id).short_title)
+
 - when 'Ticket'
   = 'ticket'
   - ticket = current_or_last_object_state(version.item_type, version.item_id)

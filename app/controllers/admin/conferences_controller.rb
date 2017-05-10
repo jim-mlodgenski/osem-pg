@@ -73,7 +73,7 @@ module Admin
         redirect_to admin_conference_path(id: @conference.short_title),
                     notice: 'Conference was successfully created.'
       else
-        flash[:error] = 'Could not create conference. ' + @conference.errors.full_messages.to_sentence
+        flash.now[:error] = 'Could not create conference. ' + @conference.errors.full_messages.to_sentence
         render action: 'new'
       end
     end
@@ -82,6 +82,7 @@ module Admin
       short_title = @conference.short_title
       @conference.assign_attributes(conference_params)
       send_mail_on_conf_update = @conference.notify_on_dates_changed?
+      delete_event_schedules if @conference.start_hour_changed? || @conference.end_hour_changed?
 
       if @conference.update_attributes(conference_params)
         ConferenceDateUpdateMailJob.perform_later(@conference) if send_mail_on_conf_update
@@ -177,15 +178,26 @@ module Admin
 
     def conference_params
       params.require(:conference).permit(:title, :short_title, :description, :timezone,
-                                         :start_date, :end_date, :rooms_attributes, :tracks_attributes,
+                                         :start_date, :end_date, :start_hour, :end_hour,
+                                         :rooms_attributes, :tracks_attributes,
                                          :tickets_attributes, :event_types_attributes,
-                                         :picture, :picture_cache, :questions_attributes,
-                                         :question_ids, :answers_attributes, :answer_ids, :difficulty_levels_attributes,
+                                         :picture, :picture_cache, :background, :background_cache,
+                                         :questions_attributes,:question_ids, :answers_attributes,
+                                         :answer_ids, :difficulty_levels_attributes,
                                          :use_vpositions, :use_vdays, :vdays_attributes,
                                          :vpositions_attributes, :use_volunteers, :color,
                                          :sponsorship_levels_attributes, :sponsors_attributes,
                                          :targets, :targets_attributes,
                                          :campaigns, :campaigns_attributes, :registration_limit, :require_itinerary, :code_ids)
+    end
+
+    def delete_event_schedules
+      event_schedules = EventSchedule.select do |e|
+        e.start_time.strftime('%H').to_i < @conference.start_hour ||
+        e.end_time.strftime('%H').to_i > @conference.end_hour ||
+        (e.end_time.strftime('%H').to_i == @conference.end_hour && e.end_time.strftime('%M').to_i > 0)
+      end
+      event_schedules.each(&:destroy)
     end
   end
 end

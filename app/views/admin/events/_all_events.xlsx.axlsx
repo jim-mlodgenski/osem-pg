@@ -9,7 +9,7 @@ wb.add_worksheet(name: 'all events') do |sheet|
     row << event.title
     row << event.abstract
     row << (event.time.present? ? "#{event.time.strftime("%Y-%m-%d")} #{event.time.strftime("%I:%M%p")} " : '')
-    row << event.submitter.name
+    row << event.submitter.try(:name)
     row << event.speaker_names
     row << event.event_type.title
     row << (event.track.present? ? event.track.name : '')

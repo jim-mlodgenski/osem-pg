@@ -16,52 +16,91 @@
 }
 
 .schedule-room-slot{
-  padding: 2px 5px;
+  padding: 2px 3px;
   border: 1px solid #848484;
-  height: 58px;
+  height: 24px;
   line-height: 20px;
   font-size: 13px;
 }
 
+.schedule-room-slot .schedule-event {
+  margin-top: -23px;
+  opacity: 0.8;
+}
+
 .schedule-event{
-  padding: 7px;
+  padding: 5px;
   border: 2px solid #151515;
   position:relative;
   z-index:1;
   cursor:move;
 }
 
+.schedule-room-slot .schedule-event.compact {
+  margin-top: -23px;
+  margin-left: 20%;
+  width: 80%;
+}
+
 .schedule-event-text{
   display: -webkit-box;
   text-overflow: ellipsis;
   -webkit-box-orient: vertical;
-  line-height: 23px;
+  line-height: 14px;
   overflow: hidden;
 }
 
-.schedule-event-delete-button {
-    font-weight:bold;
-    cursor: pointer;
-    padding: 0px 3px;
-    border: 1px solid grey;
-    margin-right: 5px;
+.curor-help {
+    cursor: help;
 }
 
-#schedule td.event {
-background-image: linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
-background-image: -o-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
-background-image: -moz-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
-background-image: -webkit-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
-background-image: -ms-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
+.cursor-pointer {
+    cursor: pointer;
+}
 
-background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.24, rgb(247,250,242)),
-    color-stop(0.97, rgb(194,232,190)),
-    color-stop(1, rgb(194,232,190))
-);
+.transparent {
+  opacity: 0.1;
+}
+
+.unscheduled-events .schedule-event-delete-button {
+  display: none;
+}
+
+.room-col {
+    width: 10%;
+    padding: 10px;
+    float: left
+};
+
+div#schedule-content .carousel-control {
+  width: 5%;
+  background: rgba(0, 0, 0, 0.25) !important;
+}
+
+#schedule-content .row.legend {
+  padding: 0px 0px 20px 5px;
+  margin: 0px;
+}
+
+#schedule-content .row.legend .track {
+  padding: 0px;
+}
+#schedule td.event {
+  background: #f0f8ff;
+// background-image: linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
+// background-image: -o-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
+// background-image: -moz-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
+// background-image: -webkit-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
+// background-image: -ms-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(194,232,190) 97%, rgb(194,232,190) 100%);
+
+// background-image: -webkit-gradient(
+//     linear,
+//     left bottom,
+//     left top,
+//     color-stop(0.24, rgb(247,250,242)),
+//     color-stop(0.97, rgb(194,232,190)),
+//     color-stop(1, rgb(194,232,190))
+// );
 
 cursor: pointer;
 padding: 3px 2px;
@@ -69,20 +108,21 @@ padding: 3px 2px;
 
 #schedule td.event:hover
 {
-background-image: linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
-background-image: -o-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
-background-image: -moz-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
-background-image: -webkit-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
-background-image: -ms-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
+  background: #C9E6FF;
+// background-image: linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
+// background-image: -o-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
+// background-image: -moz-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
+// background-image: -webkit-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
+// background-image: -ms-linear-gradient(bottom, rgb(247,250,242) 24%, rgb(83,171,74) 97%, rgb(83,171,74) 100%);
 
-background-image: -webkit-gradient(
-    linear,
-    left bottom,
-    left top,
-    color-stop(0.24, rgb(247,250,242)),
-    color-stop(0.97, rgb(83,171,74)),
-    color-stop(1, rgb(83,171,74))
-);
+// background-image: -webkit-gradient(
+//     linear,
+//     left bottom,
+//     left top,
+//     color-stop(0.24, rgb(247,250,242)),
+//     color-stop(0.97, rgb(83,171,74)),
+//     color-stop(1, rgb(83,171,74))
+// );
 }
 
 .flexvideo {
@@ -103,6 +143,15 @@ background-image: -webkit-gradient(
     margin-top: 20px;
 }
 
+.speakerinfo h4 {
+    word-break: break-all;
+    margin-top: 0px !important;
+}
+
+.speakerbio {
+    margin-top: 10px;
+}
+
 .schedule-title, .schedule-subtitle, .schedule-speaker, .schedule-track {
     clear: none;
     display: block;
@@ -119,8 +168,8 @@ a.unstyled-link {
  }
 
 .program-dropdown, .schedule-dropdown{
-  margin-left: 20%;
-  margin-right: 20%;
+  // margin-left: 20%;
+  // margin-right: 20%;
   margin-top: 40px;
   margin-bottom: 20px;
 }
@@ -166,12 +215,13 @@ td.room{
 }
 
 th.date{
-  font-size: 12px;
-  padding: 8px 0px 8px 1% !important;
+  font-size: 12px !important;
+  padding: 2px 0px 2px 1px !important;
 }
 
 .speaker-pic{
   padding: 4px 2px;
+  margin-top: -5px
 }
 
 .schedule-table{
@@ -229,8 +279,8 @@ td.no-padding{
  }
 
 .program-dropdown{
-  margin-left: 20%;
-  margin-right: 20%;
+  // margin-left: 20%;
+  // margin-right: 20%;
   margin-top: 40px;
 }
 

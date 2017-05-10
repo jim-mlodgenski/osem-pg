@@ -5,8 +5,6 @@
 .container
   .row
     .col-md-12.text-center
-      %h1 Registration
-
       - if @conference.registration_limit_exceeded?
         %p
           Sorry, the conference registration limit has exceeded
@@ -23,8 +21,13 @@
             %p.cta-button
         - else
           %p
-            The registration period ends on
-            = @conference.registration_period.end_date.strftime('%A, %B %-d. %Y')
+            %h2 The registration period ends in
+          #wrapper.row
+            #reg-days.col-md-1.col-md-offset-4
+            #reg-hours.col-md-1
+            #reg-minutes.col-md-1
+            #reg-seconds.col-md-1
+
           %p.cta-button
-        = link_to(new_conference_conference_registration_path(@conference.short_title), class: 'btn btn-lg btn-success') do
-          Register Now
+            = link_to(new_conference_conference_registration_path(@conference.short_title), class: 'btn btn-lg btn-warning') do
+              Register Now

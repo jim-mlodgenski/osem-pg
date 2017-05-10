@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   include Gravtastic
   gravtastic size: 32
 
+  mount_uploader :avatar, AvatarUploader, mount_on: :avatar_file_name
+
   before_create :setup_role
 
   # add scope
@@ -41,6 +43,7 @@ class User < ActiveRecord::Base
 
   has_many :event_users, dependent: :destroy
   has_many :events, -> { uniq }, through: :event_users
+  has_many :presented_events, -> { joins(:event_users).where(event_users: {event_role: 'speaker'}).uniq }, through: :event_users, source: :event
   has_many :registrations, dependent: :destroy
   has_many :events_registrations, through: :registrations
   has_many :ticket_purchases, dependent: :destroy
@@ -194,6 +197,25 @@ class User < ActiveRecord::Base
     proposals(conference).count
   end
 
+  # Django passwords encryption support
+  def valid_password?(pwd)
+    begin
+      super(pwd) # try the standard way
+    rescue
+      Pbkdf2PasswordHasher.check_password(pwd,self.encrypted_password) # if failed, then try the django's way
+    end
+  end
+
+  def avatar_url(options={})
+    version = options[:version] || 'medium'
+    if self.avatar?
+      self.avatar.send version
+    else
+      size_map = {'large' => 200, 'medium' => 48, 'small' => 32, 'xsmall' => 25}
+      gravatar_url(size: size_map[version])
+    end
+  end
+
   private
 
   def setup_role
@@ -207,7 +229,8 @@ class User < ActiveRecord::Base
   #
   def biography_limit
     if self.biography.present?
-      errors.add(:biography, 'is limited to 150 words.') if self.biography.split.length > 150
+      errors.add(:biography, 'is limited to 150 words.') if self.biography.split.length > 350
     end
   end
+
 end

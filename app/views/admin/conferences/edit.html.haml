@@ -17,10 +17,20 @@
         = image_tag @conference.picture.thumb.url
       = f.input :picture, :label => false, :hint => "This will be displayed on the front page."
       = f.hidden_field :picture_cache
+
+      = f.label 'Conference Background Image'
+      %br
+      - if @conference.background?
+        = image_tag @conference.background.thumb.url
+      = f.input :background, :label => false, :hint => "This image will be used as the splashpage background."
+      = f.hidden_field :background_cache
+
       = f.inputs :name => "Scheduling" do
         = f.input :timezone, :as => :time_zone, :hint => "The conference time zone"
         = f.input :start_date, :as => :string, :input_html => { :id => "conference-start-datepicker", :readonly => "readonly"  }
         = f.input :end_date, :as => :string, :input_html => { :id => "conference-end-datepicker", :readonly => "readonly"  }
+        = f.input :start_hour, :input_html => {size: 2, type: 'number', min: 0, max: 23}
+        = f.input :end_hour, :input_html => {size: 2, type: 'number', min: 1, max: 24}
       = f.inputs name: "Registrations" do
         = f.input :registration_limit, as: :number, in: 0..9999, hint: "Limit the number of registrations to the conference (0 no limit)"
         = f.input :require_itinerary, label: "Require the attendee's itinerary at registrion time"

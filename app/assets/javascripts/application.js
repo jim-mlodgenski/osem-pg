@@ -25,6 +25,8 @@
 //= require osem-dashboard
 //= require ahoy
 //= require jquery-smooth-scroll
+//= require jquery.countdown
+//= require jquery.prettySocial
 //= require trianglify
 //= require tinycolor
 //= require bootstrap-markdown
@@ -46,6 +48,7 @@
 //= require unobtrusive_flash
 //= require unobtrusive_flash_bootstrap
 //= require accounting.min
+//= require selectize
 
 $(document).ready(function() {
     $('a[disabled=disabled]').click(function(event){

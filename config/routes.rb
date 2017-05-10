@@ -50,6 +50,7 @@ Osem::Application.routes.draw do
         resources :rooms, except: [:show]
       end
       resource :registration_period
+      resource :sponsorship_info
       resource :program do
         resource :cfp
         resources :tracks
@@ -120,6 +121,8 @@ Osem::Application.routes.draw do
           get :registrations
           patch '/confirm' => 'proposals#confirm'
           patch '/restart' => 'proposals#restart'
+          post :comment
+          get :vote
         end
       end
     end
@@ -130,9 +133,12 @@ Osem::Application.routes.draw do
     resources :ticket_purchases, only: [:create, :destroy]
     resources :payments, only: [:index, :new, :create]
     resource :subscriptions, only: [:create, :destroy]
+    resource :sponsors, only: [:show]
+
     resource :schedule, only: [:show] do
       member do
         get :events
+        get :today_events
       end
     end
   end
@@ -154,5 +160,8 @@ Osem::Application.routes.draw do
 
   get '/admin' => redirect('/admin/conferences')
 
-  root to: 'conferences#index', via: [:get, :options]
+  get '/conferences' => 'conferences#index'
+  get '/2017' => 'conferences#show'
+  # root to: 'conferences#index', via: [:get, :options]
+  root to: 'conferences#redirect_to_current'
 end

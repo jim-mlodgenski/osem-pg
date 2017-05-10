@@ -127,26 +127,27 @@ ActiveRecord::Schema.define(version: 20170503235816) do
   end
 
   create_table "conferences", force: :cascade do |t|
-    t.string   "guid",                               null: false
-    t.string   "title",                              null: false
-    t.string   "short_title",                        null: false
-    t.string   "timezone",                           null: false
-    t.date     "start_date",                         null: false
-    t.date     "end_date",                           null: false
+    t.string   "guid",                                 null: false
+    t.string   "title",                                null: false
+    t.string   "short_title",                          null: false
+    t.string   "timezone",                             null: false
+    t.date     "start_date",                           null: false
+    t.date     "end_date",                             null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "logo_file_name"
     t.integer  "revision"
-    t.boolean  "use_vpositions",     default: false
-    t.boolean  "use_vdays",          default: false
+    t.boolean  "use_vpositions",       default: false
+    t.boolean  "use_vdays",            default: false
     t.boolean  "use_volunteers"
     t.string   "color"
     t.text     "events_per_week"
     t.text     "description"
-    t.integer  "registration_limit", default: 0
+    t.integer  "registration_limit",   default: 0
     t.string   "picture"
     t.integer  "start_hour",         default: 9
     t.integer  "end_hour",           default: 20
+    t.string   "background_file_name"
     t.boolean  "require_itinerary"
     t.boolean  "use_pg_flow",        default: true
   end
@@ -489,6 +490,16 @@ ActiveRecord::Schema.define(version: 20170503235816) do
     t.string   "picture"
   end
 
+  create_table "sponsorship_infos", force: :cascade do |t|
+    t.text     "description"
+    t.integer  "conference_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "prospectus"
+  end
+
+  add_index "sponsorship_infos", ["conference_id"], name: "index_sponsorship_infos_on_conference_id", using: :btree
+
   create_table "sponsorship_levels", force: :cascade do |t|
     t.string   "title"
     t.integer  "conference_id"
@@ -689,5 +700,6 @@ ActiveRecord::Schema.define(version: 20170503235816) do
   add_foreign_key "codes_tickets", "tickets"
   add_foreign_key "conferences_codes", "codes"
   add_foreign_key "conferences_codes", "conferences"
+  add_foreign_key "sponsorship_infos", "conferences"
   add_foreign_key "ticket_purchases", "codes"
 end

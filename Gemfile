@@ -11,7 +11,7 @@ gem 'rails', '~> 4.2'
 # enables serving assets in production and setting your logger to standard out
 # both of which are required to run an application on a twelve-factor provider
 # like heroku.com
-gem 'rails_12factor', group: :production
+#gem 'rails_12factor', group: :production
 
 # respond_to methods have been extracted to the responders gem
 # http://edgeguides.rubyonrails.org/upgrading_ruby_on_rails.html#responders
@@ -22,6 +22,9 @@ gem 'responders', '~> 2.0'
 
 # comment the mysql gem above if using Postgres
 gem 'pg'
+
+#support for Django password hashes
+gem 'pbkdf2_password_hasher'
 
 # for observing records
 gem 'rails-observers'
@@ -79,6 +82,7 @@ gem 'autoprefixer-rails'
 gem 'formtastic-bootstrap'
 gem 'formtastic', '~> 3.1.1'
 gem 'cocoon'
+gem 'pdfjs_viewer-rails'#, :git => 'https://github.com/TinderBox/pdfjs_viewer-rails.git', :branch => 'pdfjs-1.5.188'
 
 # as the JavaScript library
 gem 'jquery-rails'
@@ -189,6 +193,12 @@ gem 'factory_girl_rails'
 
 # for integrating Stripe payment gateway
 gem 'stripe'
+
+# for multiple speakers select on proposal/event forms
+gem 'selectize-rails'
+
+# event social sharing bootstrap buttons
+gem 'bootstrap-social-rails'
 
 # Use guard and spring for testing in development
 group :development do

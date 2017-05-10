@@ -1,13 +1,17 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
 html {
   position: relative;
   min-height: 100%;
 }
 
+
 body {
   /* Margin bottom by 2 times the footer height */
-  margin-bottom: 60px;
+  // margin-bottom: 36px;
+  font-family: 'Roboto', sans-serif;
   /* Margin bottom by navbar height */
-  padding-top: 60px;
+  // padding-top: 60px;
 }
 
 #content {
@@ -15,21 +19,147 @@ body {
 }
 
 #footer {
-  position: absolute;
   bottom: 0;
   width: 100%;
-  background-color: #f5f5f5;
+  color: grey;
   .container {
-    padding: 15px;
+    padding: 5px;
   }
+}
+
+// different color for the splashpage footer
+.splash-footer {
+  position: absolute;
+  // background-color: #2F2F2F;
+}
+
+.container {
+  width: 90%;
+}
+
+.navbar-toggle .icon-bar {
+    background-color: #fff;
+}
+
+.navbar-custom {
+    // background-color: rgba(0,0,0,0.3);
+    border: 0 none;
+    margin: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    transition: all 0.2s linear 0s;
+}
+.navbar-custom .navbar-nav li {
+    margin: 0;
+}
+.navbar-custom .navbar-nav > li > a {
+    border-bottom: 3px solid transparent;
+    text-shadow: 1px 1px 3px #000;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+.navbar-custom .navbar-nav > li > a:focus, .navbar-custom .navbar-nav > li > a:hover {
+    outline: 0;
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.7);
+}
+.navbar-custom .navbar-nav > .active > a {
+    border-color: rgb(255, 255, 255);
 }
 
 .nav-tabs {
   margin-bottom: 15px;
 }
 
+.navbar-brand {
+    color: white;
+    font-size: 30px;
+}
+
+.navbar-brand img {
+   max-height:50px;
+   margin-top: -14px;
+}
+
+.navbar-solid {
+    background-color: #fcfcfc;
+    padding: 0 !important;
+    transition: all 0.2s linear 0s;
+    -webkit-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
+    -moz-box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.17);
+}
+
+.navbar-solid a.navbar-brand {
+  color: grey !important;
+}
+
+.navbar-solid .navbar-toggle > span {
+  background-color: grey !important;
+}
+
+.navbar-solid .navbar-nav > li > a {
+    border-bottom: 2px solid transparent;
+    text-shadow: none;
+    color: #333333;
+}
+
+.navbar-solid .navbar-nav > li > a:focus, .navbar-solid .navbar-nav > li > a:hover {
+    background-color: whitesmoke;
+    border-bottom: 2px solid #ccc;
+}
+
+.navbar-solid .navbar-brand img {
+    filter: brightness(33%);
+}
+
+.navbar-solid .dropdown-menu > li > a {
+  color: #333333 !important;
+}
+
+// make the navbar pills width a litter smaller to prevents accidental clicks while filling in some form
+.nav.mySidebar > li > a {
+  width: 85%;
+}
+
 .img-center {
   margin: 0 auto;
+}
+
+.userpic {
+  padding-top: 10px !important;
+  padding-bottom: 8px !important;
+  img {
+    border-radius: 50%;
+  }
+}
+
+
+.social-share ul {
+    float: right;
+    list-style: none outside none;
+    margin: 0;
+    min-width: 20px;
+    padding: 0;
+}
+
+.social-share {
+    min-width: 50px;
+}
+
+.social-share li {
+    display: block;
+    font-size: 18px;
+    list-style: none outside none;
+    margin-bottom: 2px;
+    margin-left: 3px;
+    margin-top: 2px;
+}
+
+.social-share > li > a {
+  color: white
 }
 
 /* centered columns styles */
@@ -85,7 +215,13 @@ p.comment-body {
 
 #proposal-info div dt, #proposal-info div dd {
   display: inline-block;
+  text-align: left;
 }
+
+#proposal-info dt, #proposal-info dd {
+  text-align: left;
+}
+
 
 .changeset{
   display: none;

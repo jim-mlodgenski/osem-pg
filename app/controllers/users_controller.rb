@@ -13,9 +13,13 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   def update
     if @user.update(user_params)
+      if params[:remove_avatar]
+        @user.remove_avatar!
+        @user.save
+      end
       redirect_to @user, notice: 'User was successfully updated.'
     else
-      flash[:error] = "An error prohibited your Profile from being saved: #{@user.errors.full_messages.join('. ')}."
+      flash.now[:error] = "An error prohibited your Profile from being saved: #{@user.errors.full_messages.join('. ')}."
       render :edit
     end
   end
@@ -24,6 +28,6 @@ class UsersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :biography, :nickname, :affiliation, :title, :mobile)
+      params.require(:user).permit(:first_name, :last_name, :biography, :nickname, :affiliation, :avatar, :remove_avatar, :title, :mobile)
     end
 end

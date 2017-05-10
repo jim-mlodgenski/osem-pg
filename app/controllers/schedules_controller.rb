@@ -13,21 +13,31 @@ class SchedulesController < ApplicationController
 
     @events_xml = schedules.map(&:event).group_by{ |event| event.time.to_date } if schedules
     @dates = @conference.start_date..@conference.end_date
+    @tracks = @conference.program.tracks
+
     @step_minutes = EventType::LENGTH_STEP.minutes
-    @conf_start = 9
-    conf_end = 20
-    @conf_period = conf_end - @conf_start
+    @conf_start = @conference.start_hour
+    @conf_period = @conference.end_hour - @conf_start
 
     # the schedule takes you to today if it is a date of the schedule
     @current_day = @conference.current_conference_day
     @day = @current_day.present? ? @current_day : @dates.first
     return unless @current_day
     # the schedule takes you to the current time if it is beetween the start and the end time.
-    @hour_column = @conference.hours_from_start_time(@conf_start, conf_end)
+    @hour_column = @conference.hours_from_start_time(@conf_start, @conference.end_hour)
+  end
+
+  def today_events
+    day = Time.find_zone(@conference.timezone).today
+    @current_time = Time.current.in_time_zone(@conference.timezone)
+    @today_event_schedules = @program.selected_event_schedules.where(
+      start_time: day + @conference.start_hour.hours..day + @conference.end_hour.hours)
+    render partial: 'today_events'
   end
 
   def events
     @dates = @conference.start_date..@conference.end_date
+    @tracks = @conference.program.tracks
 
     @events_schedules = @program.selected_event_schedules
     @events_schedules = [] unless @events_schedules

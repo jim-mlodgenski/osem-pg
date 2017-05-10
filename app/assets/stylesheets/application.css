@@ -8,6 +8,8 @@
  *= require osem-schedule-print
  *= require osem-dashboard
  *= require osem-splash
+ *= require osem-conferences
+ *= require osem-sponsorinfo
  *= require font-awesome
  *= require osem-fonts
  *= require bootstrap-markdown
@@ -15,4 +17,7 @@
  *= require leaflet
  *= require bootstrap3-switch
  *= require osem-payments
+ *= require selectize
+ *= require selectize.bootstrap3
+ *= require bootstrap-social
 */
